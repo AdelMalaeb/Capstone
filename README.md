@@ -1,3 +1,35 @@
+## Table of Contents
+
+- [Scenario](#scenario)
+- [Data Dictionary](#data-dictionary)
+- [Import packages](#import-packages)
+
+- [Load dataset](#load-dataset)
+
+- [Step 2. Data Exploration (Initial EDA and data cleaning)](#step-2.-data-exploration-(initial-eda-and-data-cleaning))
+
+
+- [Step 3. Data Exploration extensive EDA on the depandant variable](#step-3.-data-exploration-extensive-eda-on-the-depandant-variable)
+
+- [Construct Stage](#construct-stage)
+- [Determine which models are most appropriate](#determine-which-models-are-most-appropriate)
+- [Construct the model](#construct-the-model)
+- [Modeling approach 1: Binomial Logistic Regression Model](#modeling-approach-1:-binomial-logistic-regression-model)
+
+- [Modeling approach 2: Descision Tree Classifier](#modeling-approach-2:-descision-tree-classifier)
+- [Decision Tree round 1](#decision-tree-round-1)
+
+- [Random forest round 1](#random-forest-round-1)
+
+- [Decision tree - Round 2](#decision-tree---round-2)
+
+- [Random forest - Round 2](#random-forest---round-2)
+
+- [Feature Importance](#feature-importance)
+- [Decision Tree round 2](#decision-tree-round-2)
+- [Random Forest round 2](#random-forest-round-2)
+
+
 # Scenario
 
 Salifort strives to create a corporate culture that supports employee success and professional development. Further, the high turnover rate is costly in the financial sense. Salifort makes a big investment in recruiting, training, and upskilling its employees. 
@@ -33,13 +65,7 @@ promotion_last_5years|Whether or not the employee was promoted in the last 5 yea
 Department|The employee's department
 salary|The employee's salary (U.S. dollars)
 
-# Question to be answered (Plan Stage)
 
-*  Who are the stakeholders for this project?
-- What I am trying to solve or accomplish?
-- What are my initial observations when I explore the data?
-- What resources do I find myself using as I complete this stage? 
-- Do I have any ethical considerations in this stage?
 
 
 ## Step 1 - Imports
