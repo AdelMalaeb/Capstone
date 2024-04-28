@@ -33,123 +33,6 @@ promotion_last_5years|Whether or not the employee was promoted in the last 5 yea
 Department|The employee's department
 salary|The employee's salary (U.S. dollars)
 
-## Table of Contents
-
-- [Scenario](#scenario)
-- [Data Dictionary](#data-dictionary)
-- [Question to be answered (Plan Stage)](#question-to-be-answered-(plan-stage))
-- [Step 1 - Imports](#step-1---imports)
-- [Import packages](#import-packages)
-- [For data manipulation](#for-data-manipulation)
-- [For data visualization](#for-data-visualization)
-- [For displaying all of the columns in dataframes](#for-displaying-all-of-the-columns-in-dataframes)
-- [For data modeling](#for-data-modeling)
-- [For metrics and helpful functions](#for-metrics-and-helpful-functions)
-- [For saving models](#for-saving-models)
-- [Load dataset](#load-dataset)
-- [Display first few rows of the dataframe](#display-first-few-rows-of-the-dataframe)
-- [Step 2. Data Exploration (Initial EDA and data cleaning)](#step-2.-data-exploration-(initial-eda-and-data-cleaning))
-- [Discover the data](#discover-the-data)
-- [Function to convert column names to snake_case](#function-to-convert-column-names-to-snake_case)
-- [Apply the function to all column names](#apply-the-function-to-all-column-names)
-- [Rename columns in the DataFrame](#rename-columns-in-the-dataframe)
-- [Discriptive Statistics](#discriptive-statistics)
-- [Missing Values](#missing-values)
-- [Check duplicates](#check-duplicates)
-- [Applying a likelihood anaylsis using Bayes' theorem. ](#applying-a-likelihood-anaylsis-using-bayes'-theorem.-)
-- [Calculate the observed number of duplicates](#calculate-the-observed-number-of-duplicates)
-- [Define the likelihood function (binomial distribution for duplicates)](#define-the-likelihood-function-(binomial-distribution-for-duplicates))
-- [Specify the prior distribution (e.g., Beta distribution)](#specify-the-prior-distribution-(e.g.,-beta-distribution))
-- [Assume a Beta(1, 1) prior (uniform prior between 0 and 1)](#assume-a-beta(1,-1)-prior-(uniform-prior-between-0-and-1))
-- [Compute the posterior distribution using Bayes' theorem](#compute-the-posterior-distribution-using-bayes'-theorem)
-- [Estimate the probability of duplicates using posterior distribution](#estimate-the-probability-of-duplicates-using-posterior-distribution)
-- [Find the maximum likelihood estimate (MLE) of theta (probability of duplicates)](#find-the-maximum-likelihood-estimate-(mle)-of-theta-(probability-of-duplicates))
-- [Drop duplicates and save resulting dataframe in a new variable as needed](#drop-duplicates-and-save-resulting-dataframe-in-a-new-variable-as-needed)
-- [Display first few rows of new dataframe as needed](#display-first-few-rows-of-new-dataframe-as-needed)
-- [Check for Outliers](#check-for-outliers)
-- [Set the limits of the x-axis](#set-the-limits-of-the-x-axis)
-- [Add labels and title](#add-labels-and-title)
-- [Show the plot](#show-the-plot)
-- [Step 3. Data Exploration extensive EDA on the depandant variable](#step-3.-data-exploration-extensive-eda-on-the-depandant-variable)
-- [Create a plot as needed ](#create-a-plot-as-needed-)
-- [YOUR CODE HERE ###](#your-code-here-###)
-- [Set figure and axes](#set-figure-and-axes)
-- [Create boxplot showing `average_monthly_hours` distributions for `number_project`, comparing employees who stayed versus those who left](#create-boxplot-showing-`average_monthly_hours`-distributions-for-`number_project`,-comparing-employees-who-stayed-versus-those-who-left)
-- [Create histogram showing distribution of `number_project`, comparing employees who stayed versus those who left](#create-histogram-showing-distribution-of-`number_project`,-comparing-employees-who-stayed-versus-those-who-left)
-- [Display the plots](#display-the-plots)
-- [Create a plot as needed ](#create-a-plot-as-needed-)
-- [Create scatterplot of `average_monthly_hours` versus `satisfaction_level`, comparing employees who stayed versus those who left](#create-scatterplot-of-`average_monthly_hours`-versus-`satisfaction_level`,-comparing-employees-who-stayed-versus-those-who-left)
-- [Create plot to examine relationship between `average_monthly_hours` and `promotion_last_5years`](#create-plot-to-examine-relationship-between-`average_monthly_hours`-and-`promotion_last_5years`)
-- [Plot a correlation heatmap](#plot-a-correlation-heatmap)
-- [Construct Stage](#construct-stage)
-- [Determine which models are most appropriate](#determine-which-models-are-most-appropriate)
-- [Construct the model](#construct-the-model)
-- [Modeling approach 1: Binomial Logistic Regression Model](#modeling-approach-1:-binomial-logistic-regression-model)
-- [Copy the dataframe](#copy-the-dataframe)
-- [Dummy encode the `department` column](#dummy-encode-the-`department`-column)
-- [Isolate the Y dependant variable "left" and the independant variables "Features"](#isolate-the-y-dependant-variable-"left"-and-the-independant-variables-"features")
-- [Split the data into training set and testing set](#split-the-data-into-training-set-and-testing-set)
-- [Construct a logistic regression model and fit it to the training dataset](#construct-a-logistic-regression-model-and-fit-it-to-the-training-dataset)
-- [Use the logistic regression model to get predictions on the test set](#use-the-logistic-regression-model-to-get-predictions-on-the-test-set)
-- [Compute values for confusion matrix](#compute-values-for-confusion-matrix)
-- [Create display of confusion matrix](#create-display-of-confusion-matrix)
-- [Plot confusion matrix](#plot-confusion-matrix)
-- [Display plot](#display-plot)
-- [Create classification report for logistic regression model](#create-classification-report-for-logistic-regression-model)
-- [Modeling approach 2: Descision Tree Classifier](#modeling-approach-2:-descision-tree-classifier)
-- [Decision Tree round 1](#decision-tree-round-1)
-- [Instantiate model](#instantiate-model)
-- [Assign a dictionary of hyperparameters to search over](#assign-a-dictionary-of-hyperparameters-to-search-over)
-- [Assign a dictionary of scoring metrics to capture](#assign-a-dictionary-of-scoring-metrics-to-capture)
-- [Instantiate GridSearch](#instantiate-gridsearch)
-- [Check best AUC score on CV](#check-best-auc-score-on-cv)
-- [Get all CV scores](#get-all-cv-scores)
-- [Get predicted probabilities for the positive class (class 1)](#get-predicted-probabilities-for-the-positive-class-(class-1))
-- [Compute ROC curve and ROC area for each threshold](#compute-roc-curve-and-roc-area-for-each-threshold)
-- [Plot ROC curve with thresholds](#plot-roc-curve-with-thresholds)
-- [Plot thresholds on the ROC curve](#plot-thresholds-on-the-roc-curve)
-- [Annotate points with threshold values](#annotate-points-with-threshold-values)
-- [Random forest round 1](#random-forest-round-1)
-- [Instantiate model](#instantiate-model)
-- [Assign a dictionary of hyperparameters to search over](#assign-a-dictionary-of-hyperparameters-to-search-over)
-- [Assign a dictionary of scoring metrics to capture](#assign-a-dictionary-of-scoring-metrics-to-capture)
-- [Instantiate GridSearch](#instantiate-gridsearch)
-- [Define a path to the folder where you want to save the model](#define-a-path-to-the-folder-where-you-want-to-save-the-model)
-- [Write pickle](#write-pickle)
-- [Read pickle](#read-pickle)
-- [Check best AUC score on CV](#check-best-auc-score-on-cv)
-- [Get all CV scores](#get-all-cv-scores)
-- [Get predictions on test data](#get-predictions-on-test-data)
-- [Data leakage](#data-leakage)
-- [Drop `satisfaction_level` and save resulting dataframe in new variable](#drop-`satisfaction_level`-and-save-resulting-dataframe-in-new-variable)
-- [Display first few rows of new dataframe](#display-first-few-rows-of-new-dataframe)
-- [Create `overworked` column. For now, it's identical to average monthly hours.](#create-`overworked`-column.-for-now,-it's-identical-to-average-monthly-hours.)
-- [Inspect max and min average monthly hours values](#inspect-max-and-min-average-monthly-hours-values)
-- [Define `overworked` as working > 175 hrs/week](#define-`overworked`-as-working->-175-hrs/week)
-- [Display first few rows of new column](#display-first-few-rows-of-new-column)
-- [Drop the `average_monthly_hours` column](#drop-the-`average_monthly_hours`-column)
-- [Display first few rows of resulting dataframe](#display-first-few-rows-of-resulting-dataframe)
-- [Isolate the outcome variable](#isolate-the-outcome-variable)
-- [Select the features](#select-the-features)
-- [Create test data](#create-test-data)
-- [Decision tree - Round 2](#decision-tree---round-2)
-- [Instantiate model](#instantiate-model)
-- [Assign a dictionary of hyperparameters to search over](#assign-a-dictionary-of-hyperparameters-to-search-over)
-- [Assign a dictionary of scoring metrics to capture](#assign-a-dictionary-of-scoring-metrics-to-capture)
-- [Instantiate GridSearch](#instantiate-gridsearch)
-- [Get all CV scores](#get-all-cv-scores)
-- [Random forest - Round 2](#random-forest---round-2)
-- [Instantiate model](#instantiate-model)
-- [Assign a dictionary of hyperparameters to search over](#assign-a-dictionary-of-hyperparameters-to-search-over)
-- [Assign a dictionary of scoring metrics to capture](#assign-a-dictionary-of-scoring-metrics-to-capture)
-- [Instantiate GridSearch](#instantiate-gridsearch)
-- [Get all CV scores](#get-all-cv-scores)
-- [Get predictions on test data](#get-predictions-on-test-data)
-- [Feature Importance](#feature-importance)
-- [Decision Tree round 2](#decision-tree-round-2)
-- [Random Forest round 2](#random-forest-round-2)
-
-
 # Question to be answered (Plan Stage)
 
 *  Who are the stakeholders for this project?
@@ -202,6 +85,7 @@ from sklearn.metrics import accuracy_score, precision_score, recall_score,\
 f1_score, confusion_matrix, ConfusionMatrixDisplay, classification_report
 from sklearn.metrics import roc_auc_score, roc_curve
 from sklearn.tree import plot_tree
+from sklearn.metrics import make_scorer
 
 # For saving models
 import pickle
@@ -220,111 +104,6 @@ df0 = pd.read_csv("/Users/adel/Desktop/HR_capstone_dataset.csv")
 df0.head()
 ```
 
-
-
-
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>satisfaction_level</th>
-      <th>last_evaluation</th>
-      <th>number_project</th>
-      <th>average_montly_hours</th>
-      <th>time_spend_company</th>
-      <th>Work_accident</th>
-      <th>left</th>
-      <th>promotion_last_5years</th>
-      <th>Department</th>
-      <th>salary</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>0.38</td>
-      <td>0.53</td>
-      <td>2</td>
-      <td>157</td>
-      <td>3</td>
-      <td>0</td>
-      <td>1</td>
-      <td>0</td>
-      <td>sales</td>
-      <td>low</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>0.80</td>
-      <td>0.86</td>
-      <td>5</td>
-      <td>262</td>
-      <td>6</td>
-      <td>0</td>
-      <td>1</td>
-      <td>0</td>
-      <td>sales</td>
-      <td>medium</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>0.11</td>
-      <td>0.88</td>
-      <td>7</td>
-      <td>272</td>
-      <td>4</td>
-      <td>0</td>
-      <td>1</td>
-      <td>0</td>
-      <td>sales</td>
-      <td>medium</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>0.72</td>
-      <td>0.87</td>
-      <td>5</td>
-      <td>223</td>
-      <td>5</td>
-      <td>0</td>
-      <td>1</td>
-      <td>0</td>
-      <td>sales</td>
-      <td>low</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>0.37</td>
-      <td>0.52</td>
-      <td>2</td>
-      <td>159</td>
-      <td>3</td>
-      <td>0</td>
-      <td>1</td>
-      <td>0</td>
-      <td>sales</td>
-      <td>low</td>
-    </tr>
-  </tbody>
-</table>
-</div>
-
-
-
 ## Step 2. Data Exploration (Initial EDA and data cleaning)
 
 
@@ -335,25 +114,6 @@ df0.head()
 ```python
 df0.info()
 ```
-
-    <class 'pandas.core.frame.DataFrame'>
-    RangeIndex: 14999 entries, 0 to 14998
-    Data columns (total 10 columns):
-     #   Column                 Non-Null Count  Dtype  
-    ---  ------                 --------------  -----  
-     0   satisfaction_level     14999 non-null  float64
-     1   last_evaluation        14999 non-null  float64
-     2   number_project         14999 non-null  int64  
-     3   average_montly_hours   14999 non-null  int64  
-     4   time_spend_company     14999 non-null  int64  
-     5   Work_accident          14999 non-null  int64  
-     6   left                   14999 non-null  int64  
-     7   promotion_last_5years  14999 non-null  int64  
-     8   Department             14999 non-null  object 
-     9   salary                 14999 non-null  object 
-    dtypes: float64(2), int64(6), object(2)
-    memory usage: 1.1+ MB
-
 
 It is important to transfer all column names to the same format. The format that will be adopted is the most common format "Snake_Case". Therefore, I am going to create a function that automatically transfers all column names to the desired format.
 
@@ -382,155 +142,12 @@ df0.columns = new_columns
 df0.describe()
 ```
 
-
-
-
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>satisfaction_level</th>
-      <th>last_evaluation</th>
-      <th>number_project</th>
-      <th>average_montly_hours</th>
-      <th>time_spend_company</th>
-      <th>work_accident</th>
-      <th>left</th>
-      <th>promotion_last_5years</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>count</th>
-      <td>14999.000000</td>
-      <td>14999.000000</td>
-      <td>14999.000000</td>
-      <td>14999.000000</td>
-      <td>14999.000000</td>
-      <td>14999.000000</td>
-      <td>14999.000000</td>
-      <td>14999.000000</td>
-    </tr>
-    <tr>
-      <th>mean</th>
-      <td>0.612834</td>
-      <td>0.716102</td>
-      <td>3.803054</td>
-      <td>201.050337</td>
-      <td>3.498233</td>
-      <td>0.144610</td>
-      <td>0.238083</td>
-      <td>0.021268</td>
-    </tr>
-    <tr>
-      <th>std</th>
-      <td>0.248631</td>
-      <td>0.171169</td>
-      <td>1.232592</td>
-      <td>49.943099</td>
-      <td>1.460136</td>
-      <td>0.351719</td>
-      <td>0.425924</td>
-      <td>0.144281</td>
-    </tr>
-    <tr>
-      <th>min</th>
-      <td>0.090000</td>
-      <td>0.360000</td>
-      <td>2.000000</td>
-      <td>96.000000</td>
-      <td>2.000000</td>
-      <td>0.000000</td>
-      <td>0.000000</td>
-      <td>0.000000</td>
-    </tr>
-    <tr>
-      <th>25%</th>
-      <td>0.440000</td>
-      <td>0.560000</td>
-      <td>3.000000</td>
-      <td>156.000000</td>
-      <td>3.000000</td>
-      <td>0.000000</td>
-      <td>0.000000</td>
-      <td>0.000000</td>
-    </tr>
-    <tr>
-      <th>50%</th>
-      <td>0.640000</td>
-      <td>0.720000</td>
-      <td>4.000000</td>
-      <td>200.000000</td>
-      <td>3.000000</td>
-      <td>0.000000</td>
-      <td>0.000000</td>
-      <td>0.000000</td>
-    </tr>
-    <tr>
-      <th>75%</th>
-      <td>0.820000</td>
-      <td>0.870000</td>
-      <td>5.000000</td>
-      <td>245.000000</td>
-      <td>4.000000</td>
-      <td>0.000000</td>
-      <td>0.000000</td>
-      <td>0.000000</td>
-    </tr>
-    <tr>
-      <th>max</th>
-      <td>1.000000</td>
-      <td>1.000000</td>
-      <td>7.000000</td>
-      <td>310.000000</td>
-      <td>10.000000</td>
-      <td>1.000000</td>
-      <td>1.000000</td>
-      <td>1.000000</td>
-    </tr>
-  </tbody>
-</table>
-</div>
-
-
-
 ### Missing Values
 
 
 ```python
 df0.isna().sum()
 ```
-
-
-
-
-    satisfaction_level       0
-    last_evaluation          0
-    number_project           0
-    average_montly_hours     0
-    time_spend_company       0
-    work_accident            0
-    left                     0
-    promotion_last_5years    0
-    department               0
-    salary                   0
-    dtype: int64
-
-
 
 There are no missing values
 
@@ -542,200 +159,9 @@ df0.duplicated().sum()
 ```
 
 
-
-
-    3008
-
-
-
-
 ```python
 df0[df0.duplicated()]
 ```
-
-
-
-
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>satisfaction_level</th>
-      <th>last_evaluation</th>
-      <th>number_project</th>
-      <th>average_montly_hours</th>
-      <th>time_spend_company</th>
-      <th>work_accident</th>
-      <th>left</th>
-      <th>promotion_last_5years</th>
-      <th>department</th>
-      <th>salary</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>396</th>
-      <td>0.46</td>
-      <td>0.57</td>
-      <td>2</td>
-      <td>139</td>
-      <td>3</td>
-      <td>0</td>
-      <td>1</td>
-      <td>0</td>
-      <td>sales</td>
-      <td>low</td>
-    </tr>
-    <tr>
-      <th>866</th>
-      <td>0.41</td>
-      <td>0.46</td>
-      <td>2</td>
-      <td>128</td>
-      <td>3</td>
-      <td>0</td>
-      <td>1</td>
-      <td>0</td>
-      <td>accounting</td>
-      <td>low</td>
-    </tr>
-    <tr>
-      <th>1317</th>
-      <td>0.37</td>
-      <td>0.51</td>
-      <td>2</td>
-      <td>127</td>
-      <td>3</td>
-      <td>0</td>
-      <td>1</td>
-      <td>0</td>
-      <td>sales</td>
-      <td>medium</td>
-    </tr>
-    <tr>
-      <th>1368</th>
-      <td>0.41</td>
-      <td>0.52</td>
-      <td>2</td>
-      <td>132</td>
-      <td>3</td>
-      <td>0</td>
-      <td>1</td>
-      <td>0</td>
-      <td>RandD</td>
-      <td>low</td>
-    </tr>
-    <tr>
-      <th>1461</th>
-      <td>0.42</td>
-      <td>0.53</td>
-      <td>2</td>
-      <td>142</td>
-      <td>3</td>
-      <td>0</td>
-      <td>1</td>
-      <td>0</td>
-      <td>sales</td>
-      <td>low</td>
-    </tr>
-    <tr>
-      <th>...</th>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-    </tr>
-    <tr>
-      <th>14994</th>
-      <td>0.40</td>
-      <td>0.57</td>
-      <td>2</td>
-      <td>151</td>
-      <td>3</td>
-      <td>0</td>
-      <td>1</td>
-      <td>0</td>
-      <td>support</td>
-      <td>low</td>
-    </tr>
-    <tr>
-      <th>14995</th>
-      <td>0.37</td>
-      <td>0.48</td>
-      <td>2</td>
-      <td>160</td>
-      <td>3</td>
-      <td>0</td>
-      <td>1</td>
-      <td>0</td>
-      <td>support</td>
-      <td>low</td>
-    </tr>
-    <tr>
-      <th>14996</th>
-      <td>0.37</td>
-      <td>0.53</td>
-      <td>2</td>
-      <td>143</td>
-      <td>3</td>
-      <td>0</td>
-      <td>1</td>
-      <td>0</td>
-      <td>support</td>
-      <td>low</td>
-    </tr>
-    <tr>
-      <th>14997</th>
-      <td>0.11</td>
-      <td>0.96</td>
-      <td>6</td>
-      <td>280</td>
-      <td>4</td>
-      <td>0</td>
-      <td>1</td>
-      <td>0</td>
-      <td>support</td>
-      <td>low</td>
-    </tr>
-    <tr>
-      <th>14998</th>
-      <td>0.37</td>
-      <td>0.52</td>
-      <td>2</td>
-      <td>158</td>
-      <td>3</td>
-      <td>0</td>
-      <td>1</td>
-      <td>0</td>
-      <td>support</td>
-      <td>low</td>
-    </tr>
-  </tbody>
-</table>
-<p>3008 rows × 10 columns</p>
-</div>
-
-
 
 #### Applying a likelihood anaylsis using Bayes' theorem. 
 
@@ -777,9 +203,6 @@ mle_theta = theta_values[np.argmax(posterior_values)]
 print(f"Maximum Likelihood Estimate (MLE) of theta (probability of duplicates): {mle_theta:.4f}")
 ```
 
-    Maximum Likelihood Estimate (MLE) of theta (probability of duplicates): 0.2020
-
-
 **There are 3,008 rows that are duplicated. For simplicity, I am gonna drop the duplicates since there are multiple continous variables across the dataset and it is unlikely for these duplicates to be legitimate.**
 
 
@@ -791,111 +214,6 @@ df1 = df0.drop_duplicates(keep='first')
 # Display first few rows of new dataframe as needed
 df1.head()
 ```
-
-
-
-
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>satisfaction_level</th>
-      <th>last_evaluation</th>
-      <th>number_project</th>
-      <th>average_montly_hours</th>
-      <th>time_spend_company</th>
-      <th>work_accident</th>
-      <th>left</th>
-      <th>promotion_last_5years</th>
-      <th>department</th>
-      <th>salary</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>0.38</td>
-      <td>0.53</td>
-      <td>2</td>
-      <td>157</td>
-      <td>3</td>
-      <td>0</td>
-      <td>1</td>
-      <td>0</td>
-      <td>sales</td>
-      <td>low</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>0.80</td>
-      <td>0.86</td>
-      <td>5</td>
-      <td>262</td>
-      <td>6</td>
-      <td>0</td>
-      <td>1</td>
-      <td>0</td>
-      <td>sales</td>
-      <td>medium</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>0.11</td>
-      <td>0.88</td>
-      <td>7</td>
-      <td>272</td>
-      <td>4</td>
-      <td>0</td>
-      <td>1</td>
-      <td>0</td>
-      <td>sales</td>
-      <td>medium</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>0.72</td>
-      <td>0.87</td>
-      <td>5</td>
-      <td>223</td>
-      <td>5</td>
-      <td>0</td>
-      <td>1</td>
-      <td>0</td>
-      <td>sales</td>
-      <td>low</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>0.37</td>
-      <td>0.52</td>
-      <td>2</td>
-      <td>159</td>
-      <td>3</td>
-      <td>0</td>
-      <td>1</td>
-      <td>0</td>
-      <td>sales</td>
-      <td>low</td>
-    </tr>
-  </tbody>
-</table>
-</div>
-
-
 
 ### Check for Outliers
 
@@ -914,20 +232,10 @@ axs[1].set_title('Boxplot to detect outliers for average monthly hours', fontsiz
 sns.boxplot(x=df1["number_project"], ax= axs[2])
 axs[2].set_title('Boxplot to detect outliers for number_project', fontsize=12)
 
+# Save the plot
+plt.savefig('Outliers_Box_plot.pdf')  
+
 ```
-
-
-
-
-    Text(0.5, 1.0, 'Boxplot to detect outliers for number_project')
-
-
-
-
-    
-![png](output_33_1.png)
-    
-
 
 Looks like for the time spent at the company there are obvious outliers
 
@@ -961,56 +269,43 @@ def Outliers_detection(col):
 Outliers_detection(df1["time_spend_company"])
 ```
 
-    The upper limit is: 5.5
-    The lower limit is: 1.5
-    Number of outliers is: 824
-
-
 
 ```python
 Outliers_detection(df1["average_montly_hours"])
 ```
-
-    The upper limit is: 372.0
-    The lower limit is: 28.0
-    Number of outliers is: 0
-
 
 
 ```python
 Outliers_detection(df1["number_project"])
 ```
 
-    The upper limit is: 8.0
-    The lower limit is: 0.0
-    Number of outliers is: 0
-
-
 **Identify outliers using Z-score method and histogram visualization**
 
 
 ```python
-#Explore the distribution of the time_spend_company 
-#Construct a histogram for fast and convenient representation
-plt.hist(df1['time_spend_company'], color='skyblue', edgecolor='black')
+import matplotlib.pyplot as plt
+
+# Create a new figure and axis
+fig, ax = plt.subplots(figsize=(8, 6))
+
+# Construct a histogram for time_spend_company
+ax.hist(df1['time_spend_company'], color='skyblue', edgecolor='black')
 
 # Set the limits of the x-axis
-plt.xlim(-10, 20)  # Adjust the limits according to your data range
+ax.set_xlim(-10, 20)  # Adjust the limits according to your data range
 
 # Add labels and title
-plt.xlabel('time_spend_company')
-plt.ylabel('Frequency')
-plt.title('Histogram of the time spent at the company')
+ax.set_xlabel('Time Spent at Company')
+ax.set_ylabel('Frequency')
+ax.set_title('Histogram of Time Spent at the Company')
 
 # Show the plot
+plt.tight_layout()
 plt.show()
+
+# Save the plot after it has been displayed
+fig.savefig("Histogram_of_time_spent_at_the_company.pdf")
 ```
-
-
-    
-![png](output_40_0.png)
-    
-
 
 It looks like the distrinution follows a normal distribution which is skewed to the right. So there is a possibility that I will detect some outliers in the data that has an abnormal positive value.
 
@@ -1063,189 +358,11 @@ emperical_normal(df1["time_spend_company"])
 ```
 
 
-
-
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>Mean</th>
-      <th>Std</th>
-      <th>lower_limit</th>
-      <th>upper_limit</th>
-      <th>Distribution percentage %</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>Interval 68%</th>
-      <td>3.364857</td>
-      <td>1.33024</td>
-      <td>2.034617</td>
-      <td>4.695096</td>
-      <td>60.003336</td>
-    </tr>
-    <tr>
-      <th>Interval 95%</th>
-      <td>3.364857</td>
-      <td>1.33024</td>
-      <td>0.704378</td>
-      <td>6.025336</td>
-      <td>97.648236</td>
-    </tr>
-    <tr>
-      <th>Interval 99.7%</th>
-      <td>3.364857</td>
-      <td>1.33024</td>
-      <td>-0.625862</td>
-      <td>7.355576</td>
-      <td>98.432157</td>
-    </tr>
-  </tbody>
-</table>
-</div>
-
-
-
-
 ```python
 #use z-score to find outliers
 df1['Z_score'] = stats.zscore(df1["time_spend_company"], ddof=1)
 df1.head()
 ```
-
-    /var/folders/y2/nn4ysj1j0vjgh4j8xg9_nbl00000gq/T/ipykernel_19273/3828839451.py:2: SettingWithCopyWarning: 
-    A value is trying to be set on a copy of a slice from a DataFrame.
-    Try using .loc[row_indexer,col_indexer] = value instead
-    
-    See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
-      df1['Z_score'] = stats.zscore(df1["time_spend_company"], ddof=1)
-
-
-
-
-
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>satisfaction_level</th>
-      <th>last_evaluation</th>
-      <th>number_project</th>
-      <th>average_montly_hours</th>
-      <th>time_spend_company</th>
-      <th>work_accident</th>
-      <th>left</th>
-      <th>promotion_last_5years</th>
-      <th>department</th>
-      <th>salary</th>
-      <th>Z_score</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>0.38</td>
-      <td>0.53</td>
-      <td>2</td>
-      <td>157</td>
-      <td>3</td>
-      <td>0</td>
-      <td>1</td>
-      <td>0</td>
-      <td>sales</td>
-      <td>low</td>
-      <td>-0.274279</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>0.80</td>
-      <td>0.86</td>
-      <td>5</td>
-      <td>262</td>
-      <td>6</td>
-      <td>0</td>
-      <td>1</td>
-      <td>0</td>
-      <td>sales</td>
-      <td>medium</td>
-      <td>1.980954</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>0.11</td>
-      <td>0.88</td>
-      <td>7</td>
-      <td>272</td>
-      <td>4</td>
-      <td>0</td>
-      <td>1</td>
-      <td>0</td>
-      <td>sales</td>
-      <td>medium</td>
-      <td>0.477465</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>0.72</td>
-      <td>0.87</td>
-      <td>5</td>
-      <td>223</td>
-      <td>5</td>
-      <td>0</td>
-      <td>1</td>
-      <td>0</td>
-      <td>sales</td>
-      <td>low</td>
-      <td>1.229209</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>0.37</td>
-      <td>0.52</td>
-      <td>2</td>
-      <td>159</td>
-      <td>3</td>
-      <td>0</td>
-      <td>1</td>
-      <td>0</td>
-      <td>sales</td>
-      <td>low</td>
-      <td>-0.274279</td>
-    </tr>
-  </tbody>
-</table>
-</div>
-
-
 
 
 ```python
@@ -1255,9 +372,6 @@ print("The number of outliers using the Z-score is :", len(Possible_ouliers))
 
 
 ```
-
-    The number of outliers using the Z-score is : 188
-
 
 **Since the distribution doesn't exactly exhibit an emperical normal distribution, I will rely on the interqauntile range method which is optimal in this case because I dont have to assume NORMALITY for the distribution.**
 
@@ -1269,27 +383,9 @@ df1["left"].value_counts()
 ```
 
 
-
-
-    0    10000
-    1     1991
-    Name: left, dtype: int64
-
-
-
-
 ```python
 df1["left"].value_counts(normalize=True) *100
 ```
-
-
-
-
-    0    83.39588
-    1    16.60412
-    Name: left, dtype: float64
-
-
 
 83.39% of the employees stayed with the company; however, 16.60% of employees left the company.
 
@@ -1303,7 +399,7 @@ Start by a stacked boxplot showing `average_monthly_hours` distributions for `nu
 ### YOUR CODE HERE ###
 
 # Set figure and axes
-fig, ax = plt.subplots(1, 2, figsize = (22,8))
+fig, ax = plt.subplots(1, 2, figsize=(22, 8))
 
 # Create boxplot showing `average_monthly_hours` distributions for `number_project`, comparing employees who stayed versus those who left
 sns.boxplot(data=df1, x='average_montly_hours', y='number_project', hue='left', orient="h", ax=ax[0])
@@ -1316,15 +412,13 @@ tenure_left = df1[df1['left']==1]['number_project']
 sns.histplot(data=df1, x='number_project', hue='left', multiple='dodge', shrink=3, ax=ax[1])
 ax[1].set_title('Number of projects histogram', fontsize='14')
 
+# Save the plot directly from the figure object
+fig.savefig("Average_Monthly_Hours_vs_Number_of_Projects.pdf")
+
 # Display the plots
+plt.tight_layout()
 plt.show()
 ```
-
-
-    
-![png](output_52_0.png)
-    
-
 
 
 ```python
@@ -1332,13 +426,6 @@ plt.show()
 #weeks in a year
 50*40 / 12  # 50 weeks a year X 40 hours a week / 12 months
 ```
-
-
-
-
-    166.66666666666666
-
-
 
 <u>**Key Points:**
 
@@ -1360,13 +447,10 @@ sns.scatterplot(data=df1, x='average_montly_hours', y='satisfaction_level', hue=
 plt.axvline(x=166.67, color='#ff6361', label='166.67 hrs./mo.', ls='--')
 plt.legend(labels=[ 'left', 'stayed'])
 plt.title('Monthly hours by last evaluation score', fontsize='14');
+
+fig.savefig("Monthly_hours_vs_Last_evaluation_score.pdf")
+
 ```
-
-
-    
-![png](output_55_0.png)
-    
-
 
 Next, I could examine whether employees who worked very long hours were promoted in the last five years.
 
@@ -1379,27 +463,14 @@ sns.scatterplot(data=df1, x='average_montly_hours', y='promotion_last_5years', h
 plt.axvline(x=166.67, color='#ff6361', ls='--')
 plt.legend(labels=['166.67 hrs./mo.', 'stayed','left'])
 plt.title('Monthly hours by promotion last 5 years', fontsize='14');
+
+plt.savefig("Monthly_hours_vs_promotion_last_5_years.pdf")
 ```
-
-
-    
-![png](output_57_0.png)
-    
-
 
 
 ```python
 df1["promotion_last_5years"].value_counts(normalize=True)*100
 ```
-
-
-
-
-    0    98.307064
-    1     1.692936
-    Name: promotion_last_5years, dtype: float64
-
-
 
 Only 1.69% of employees were promoted in the last 5 years
 
@@ -1412,21 +483,17 @@ plt.figure(figsize=(16, 9))
 heatmap = sns.heatmap(df0.corr(), vmin=-1, vmax=1, annot=True, cmap=sns.color_palette("vlag", as_cmap=True))
 heatmap.set_title('Correlation Heatmap', fontdict={'fontsize':14}, pad=12);
 
+plt.savefig("Correlations_between_variables.pdf")
+
 #vmin=-1,     # Set the minimum value for color mapping
 #vmax=1,      # Set the maximum value for color mapping
 #annot=True,  # Annotate each cell with the numeric value
 #cmap=sns.color_palette("vlag", as_cmap=True))  # Set the color palette
 ```
 
-
-    
-![png](output_61_0.png)
-    
-
-
 The correlation heatmap confirms that the number of projects, monthly hours, and evaluation scores all have some positive correlation with each other, and whether an employee leaves is negatively correlated with their satisfaction level.
 
-# Construct Stage
+## Construct Stage
 1. Determine which models are most appropriate
 2. Construct the model 
 3. Confirm model assumptions
@@ -1465,26 +532,6 @@ Therefore my options will be:
 df1.info()
 ```
 
-    <class 'pandas.core.frame.DataFrame'>
-    Int64Index: 11991 entries, 0 to 11999
-    Data columns (total 11 columns):
-     #   Column                 Non-Null Count  Dtype  
-    ---  ------                 --------------  -----  
-     0   satisfaction_level     11991 non-null  float64
-     1   last_evaluation        11991 non-null  float64
-     2   number_project         11991 non-null  int64  
-     3   average_montly_hours   11991 non-null  int64  
-     4   time_spend_company     11991 non-null  int64  
-     5   work_accident          11991 non-null  int64  
-     6   left                   11991 non-null  int64  
-     7   promotion_last_5years  11991 non-null  int64  
-     8   department             11991 non-null  object 
-     9   salary                 11991 non-null  object 
-     10  Z_score                11991 non-null  float64
-    dtypes: float64(3), int64(6), object(2)
-    memory usage: 1.3+ MB
-
-
 Before splitting the data, encode the non-numeric variables. There are two: `department` and `salary`. 
 
 `department` is a categorical variable, which means you can dummy it for modeling. 
@@ -1497,16 +544,6 @@ df1["salary"].value_counts()
 ```
 
 
-
-
-    low       5740
-    medium    5261
-    high       990
-    Name: salary, dtype: int64
-
-
-
-
 ```python
 # Copy the dataframe
 df_enc = df1.copy()
@@ -1516,16 +553,6 @@ df_enc['salary'] = df_enc['salary'].map(ordinal_mapping)
 
 df_enc["salary"].value_counts()
 ```
-
-
-
-
-    0    5740
-    1    5261
-    2     990
-    Name: salary, dtype: int64
-
-
 
 
 ```python
@@ -1544,198 +571,20 @@ df_enc.head()
 ```
 
 
-
-
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>satisfaction_level</th>
-      <th>last_evaluation</th>
-      <th>number_project</th>
-      <th>average_montly_hours</th>
-      <th>time_spend_company</th>
-      <th>work_accident</th>
-      <th>left</th>
-      <th>promotion_last_5years</th>
-      <th>salary</th>
-      <th>department_IT</th>
-      <th>department_RandD</th>
-      <th>department_accounting</th>
-      <th>department_hr</th>
-      <th>department_management</th>
-      <th>department_marketing</th>
-      <th>department_product_mng</th>
-      <th>department_sales</th>
-      <th>department_support</th>
-      <th>department_technical</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>0.38</td>
-      <td>0.53</td>
-      <td>2</td>
-      <td>157</td>
-      <td>3</td>
-      <td>0</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>0.80</td>
-      <td>0.86</td>
-      <td>5</td>
-      <td>262</td>
-      <td>6</td>
-      <td>0</td>
-      <td>1</td>
-      <td>0</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>0.11</td>
-      <td>0.88</td>
-      <td>7</td>
-      <td>272</td>
-      <td>4</td>
-      <td>0</td>
-      <td>1</td>
-      <td>0</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>0.72</td>
-      <td>0.87</td>
-      <td>5</td>
-      <td>223</td>
-      <td>5</td>
-      <td>0</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>0.37</td>
-      <td>0.52</td>
-      <td>2</td>
-      <td>159</td>
-      <td>3</td>
-      <td>0</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-    </tr>
-  </tbody>
-</table>
-</div>
-
-
-
-
 ```python
 df_enc.info()
 ```
 
-    <class 'pandas.core.frame.DataFrame'>
-    Int64Index: 11991 entries, 0 to 11999
-    Data columns (total 19 columns):
-     #   Column                  Non-Null Count  Dtype  
-    ---  ------                  --------------  -----  
-     0   satisfaction_level      11991 non-null  float64
-     1   last_evaluation         11991 non-null  float64
-     2   number_project          11991 non-null  int64  
-     3   average_montly_hours    11991 non-null  int64  
-     4   time_spend_company      11991 non-null  int64  
-     5   work_accident           11991 non-null  int64  
-     6   left                    11991 non-null  int64  
-     7   promotion_last_5years   11991 non-null  int64  
-     8   salary                  11991 non-null  int64  
-     9   department_IT           11991 non-null  uint8  
-     10  department_RandD        11991 non-null  uint8  
-     11  department_accounting   11991 non-null  uint8  
-     12  department_hr           11991 non-null  uint8  
-     13  department_management   11991 non-null  uint8  
-     14  department_marketing    11991 non-null  uint8  
-     15  department_product_mng  11991 non-null  uint8  
-     16  department_sales        11991 non-null  uint8  
-     17  department_support      11991 non-null  uint8  
-     18  department_technical    11991 non-null  uint8  
-    dtypes: float64(2), int64(7), uint8(10)
-    memory usage: 1.3 MB
-
-
 **Since logistic regression is quite sensitive to outliers, it would be a good idea at this stage to remove the outliers in the `time_spend_company` column that were identified earlier.**
+
+The upper limit is: 5.5
+The lower limit is: 1.5
+
+
+```python
+Upper_limit = 5.5
+Lower_limit = 1.5
+```
 
 
 ```python
@@ -1744,167 +593,13 @@ df_logreg = df_enc[(df_enc["time_spend_company"] <= Upper_limit) & (df_enc["time
 
 
 ```python
-df_logreg.head()
+
 ```
 
 
-
-
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>satisfaction_level</th>
-      <th>last_evaluation</th>
-      <th>number_project</th>
-      <th>average_montly_hours</th>
-      <th>time_spend_company</th>
-      <th>work_accident</th>
-      <th>left</th>
-      <th>promotion_last_5years</th>
-      <th>salary</th>
-      <th>department_IT</th>
-      <th>department_RandD</th>
-      <th>department_accounting</th>
-      <th>department_hr</th>
-      <th>department_management</th>
-      <th>department_marketing</th>
-      <th>department_product_mng</th>
-      <th>department_sales</th>
-      <th>department_support</th>
-      <th>department_technical</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>0.38</td>
-      <td>0.53</td>
-      <td>2</td>
-      <td>157</td>
-      <td>3</td>
-      <td>0</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>0.11</td>
-      <td>0.88</td>
-      <td>7</td>
-      <td>272</td>
-      <td>4</td>
-      <td>0</td>
-      <td>1</td>
-      <td>0</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>0.72</td>
-      <td>0.87</td>
-      <td>5</td>
-      <td>223</td>
-      <td>5</td>
-      <td>0</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>0.37</td>
-      <td>0.52</td>
-      <td>2</td>
-      <td>159</td>
-      <td>3</td>
-      <td>0</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>5</th>
-      <td>0.41</td>
-      <td>0.50</td>
-      <td>2</td>
-      <td>153</td>
-      <td>3</td>
-      <td>0</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-    </tr>
-  </tbody>
-</table>
-</div>
-
-
+```python
+df_logreg.head()
+```
 
 
 ```python
@@ -1914,175 +609,10 @@ y.head()
 ```
 
 
-
-
-    0    1
-    2    1
-    3    1
-    4    1
-    5    1
-    Name: left, dtype: int64
-
-
-
-
 ```python
 X = df_logreg.drop("left",axis = 1)
 X.head()
 ```
-
-
-
-
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>satisfaction_level</th>
-      <th>last_evaluation</th>
-      <th>number_project</th>
-      <th>average_montly_hours</th>
-      <th>time_spend_company</th>
-      <th>work_accident</th>
-      <th>promotion_last_5years</th>
-      <th>salary</th>
-      <th>department_IT</th>
-      <th>department_RandD</th>
-      <th>department_accounting</th>
-      <th>department_hr</th>
-      <th>department_management</th>
-      <th>department_marketing</th>
-      <th>department_product_mng</th>
-      <th>department_sales</th>
-      <th>department_support</th>
-      <th>department_technical</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>0.38</td>
-      <td>0.53</td>
-      <td>2</td>
-      <td>157</td>
-      <td>3</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>0.11</td>
-      <td>0.88</td>
-      <td>7</td>
-      <td>272</td>
-      <td>4</td>
-      <td>0</td>
-      <td>0</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>0.72</td>
-      <td>0.87</td>
-      <td>5</td>
-      <td>223</td>
-      <td>5</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>0.37</td>
-      <td>0.52</td>
-      <td>2</td>
-      <td>159</td>
-      <td>3</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>5</th>
-      <td>0.41</td>
-      <td>0.50</td>
-      <td>2</td>
-      <td>153</td>
-      <td>3</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-    </tr>
-  </tbody>
-</table>
-</div>
-
-
 
 **Purpose of stratify=y:**
 
@@ -2123,18 +653,19 @@ log_cm = confusion_matrix(y_test, y_pred, labels=log_clf.classes_)
 log_disp = ConfusionMatrixDisplay(confusion_matrix=log_cm, 
                                   display_labels=log_clf.classes_)
 
-# Plot confusion matrix
-log_disp.plot()
+# Create a new figure and axis
+fig, ax = plt.subplots(figsize=(8, 6))
 
-# Display plot
+# Plot confusion matrix on the specified axis
+log_disp.plot(ax=ax)
+
+# Display the plot
+plt.tight_layout()
 plt.show()
+
+# Save the plot after it has been displayed
+fig.savefig("Confusion_Matrix_for_the_Binomial_Logistic_Regression.pdf")
 ```
-
-
-    
-![png](output_86_0.png)
-    
-
 
 **Analysis of the confusion matrix**
 
@@ -2163,15 +694,6 @@ A perfect model would yield all true negatives and true positives, and no false 
 df_logreg['left'].value_counts(normalize=True)
 ```
 
-
-
-
-    0    0.831468
-    1    0.168532
-    Name: left, dtype: float64
-
-
-
 There is an approximately 83%-17% split. So the data is not perfectly balanced, but it is not too imbalanced. If it was more severely imbalanced, I might want to resample the data to make it more balanced. In this case, I can use this data without modifying the class balance and continue evaluating the model.
 
 
@@ -2180,17 +702,6 @@ There is an approximately 83%-17% split. So the data is not perfectly balanced, 
 target_names = ['Predicted would not leave', 'Predicted would leave']
 print(classification_report(y_test, y_pred, target_names=target_names))
 ```
-
-                               precision    recall  f1-score   support
-    
-    Predicted would not leave       0.86      0.93      0.90      2321
-        Predicted would leave       0.44      0.26      0.33       471
-    
-                     accuracy                           0.82      2792
-                    macro avg       0.65      0.60      0.61      2792
-                 weighted avg       0.79      0.82      0.80      2792
-    
-
 
 **<u>Precision:**
 Definition: Precision measures the accuracy of positive predictions made by the model. It is calculated as the ratio of true positive predictions to the total predicted positive instances.
@@ -2234,176 +745,11 @@ y.head()
 ```
 
 
-
-
-    0    1
-    1    1
-    2    1
-    3    1
-    4    1
-    Name: left, dtype: int64
-
-
-
-
 ```python
 #Isolate the features
 X = df_enc.drop("left",axis = 1)
 X.head()
 ```
-
-
-
-
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>satisfaction_level</th>
-      <th>last_evaluation</th>
-      <th>number_project</th>
-      <th>average_montly_hours</th>
-      <th>time_spend_company</th>
-      <th>work_accident</th>
-      <th>promotion_last_5years</th>
-      <th>salary</th>
-      <th>department_IT</th>
-      <th>department_RandD</th>
-      <th>department_accounting</th>
-      <th>department_hr</th>
-      <th>department_management</th>
-      <th>department_marketing</th>
-      <th>department_product_mng</th>
-      <th>department_sales</th>
-      <th>department_support</th>
-      <th>department_technical</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>0.38</td>
-      <td>0.53</td>
-      <td>2</td>
-      <td>157</td>
-      <td>3</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>0.80</td>
-      <td>0.86</td>
-      <td>5</td>
-      <td>262</td>
-      <td>6</td>
-      <td>0</td>
-      <td>0</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>0.11</td>
-      <td>0.88</td>
-      <td>7</td>
-      <td>272</td>
-      <td>4</td>
-      <td>0</td>
-      <td>0</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>0.72</td>
-      <td>0.87</td>
-      <td>5</td>
-      <td>223</td>
-      <td>5</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>0.37</td>
-      <td>0.52</td>
-      <td>2</td>
-      <td>159</td>
-      <td>3</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-    </tr>
-  </tbody>
-</table>
-</div>
-
-
 
 
 ```python
@@ -2443,869 +789,16 @@ tree1 = GridSearchCV(tree, cv_params, scoring=scoring, cv=4, refit='roc_auc_scor
 tree1.fit(X_train, y_train)
 ```
 
-    CPU times: user 2.87 s, sys: 71.6 ms, total: 2.94 s
-    Wall time: 2.89 s
-
-
-
-
-
-<style>#sk-container-id-16 {
-  /* Definition of color scheme common for light and dark mode */
-  --sklearn-color-text: black;
-  --sklearn-color-line: gray;
-  /* Definition of color scheme for unfitted estimators */
-  --sklearn-color-unfitted-level-0: #fff5e6;
-  --sklearn-color-unfitted-level-1: #f6e4d2;
-  --sklearn-color-unfitted-level-2: #ffe0b3;
-  --sklearn-color-unfitted-level-3: chocolate;
-  /* Definition of color scheme for fitted estimators */
-  --sklearn-color-fitted-level-0: #f0f8ff;
-  --sklearn-color-fitted-level-1: #d4ebff;
-  --sklearn-color-fitted-level-2: #b3dbfd;
-  --sklearn-color-fitted-level-3: cornflowerblue;
-
-  /* Specific color for light theme */
-  --sklearn-color-text-on-default-background: var(--sg-text-color, var(--theme-code-foreground, var(--jp-content-font-color1, black)));
-  --sklearn-color-background: var(--sg-background-color, var(--theme-background, var(--jp-layout-color0, white)));
-  --sklearn-color-border-box: var(--sg-text-color, var(--theme-code-foreground, var(--jp-content-font-color1, black)));
-  --sklearn-color-icon: #696969;
-
-  @media (prefers-color-scheme: dark) {
-    /* Redefinition of color scheme for dark theme */
-    --sklearn-color-text-on-default-background: var(--sg-text-color, var(--theme-code-foreground, var(--jp-content-font-color1, white)));
-    --sklearn-color-background: var(--sg-background-color, var(--theme-background, var(--jp-layout-color0, #111)));
-    --sklearn-color-border-box: var(--sg-text-color, var(--theme-code-foreground, var(--jp-content-font-color1, white)));
-    --sklearn-color-icon: #878787;
-  }
-}
-
-#sk-container-id-16 {
-  color: var(--sklearn-color-text);
-}
-
-#sk-container-id-16 pre {
-  padding: 0;
-}
-
-#sk-container-id-16 input.sk-hidden--visually {
-  border: 0;
-  clip: rect(1px 1px 1px 1px);
-  clip: rect(1px, 1px, 1px, 1px);
-  height: 1px;
-  margin: -1px;
-  overflow: hidden;
-  padding: 0;
-  position: absolute;
-  width: 1px;
-}
-
-#sk-container-id-16 div.sk-dashed-wrapped {
-  border: 1px dashed var(--sklearn-color-line);
-  margin: 0 0.4em 0.5em 0.4em;
-  box-sizing: border-box;
-  padding-bottom: 0.4em;
-  background-color: var(--sklearn-color-background);
-}
-
-#sk-container-id-16 div.sk-container {
-  /* jupyter's `normalize.less` sets `[hidden] { display: none; }`
-     but bootstrap.min.css set `[hidden] { display: none !important; }`
-     so we also need the `!important` here to be able to override the
-     default hidden behavior on the sphinx rendered scikit-learn.org.
-     See: https://github.com/scikit-learn/scikit-learn/issues/21755 */
-  display: inline-block !important;
-  position: relative;
-}
-
-#sk-container-id-16 div.sk-text-repr-fallback {
-  display: none;
-}
-
-div.sk-parallel-item,
-div.sk-serial,
-div.sk-item {
-  /* draw centered vertical line to link estimators */
-  background-image: linear-gradient(var(--sklearn-color-text-on-default-background), var(--sklearn-color-text-on-default-background));
-  background-size: 2px 100%;
-  background-repeat: no-repeat;
-  background-position: center center;
-}
-
-/* Parallel-specific style estimator block */
-
-#sk-container-id-16 div.sk-parallel-item::after {
-  content: "";
-  width: 100%;
-  border-bottom: 2px solid var(--sklearn-color-text-on-default-background);
-  flex-grow: 1;
-}
-
-#sk-container-id-16 div.sk-parallel {
-  display: flex;
-  align-items: stretch;
-  justify-content: center;
-  background-color: var(--sklearn-color-background);
-  position: relative;
-}
-
-#sk-container-id-16 div.sk-parallel-item {
-  display: flex;
-  flex-direction: column;
-}
-
-#sk-container-id-16 div.sk-parallel-item:first-child::after {
-  align-self: flex-end;
-  width: 50%;
-}
-
-#sk-container-id-16 div.sk-parallel-item:last-child::after {
-  align-self: flex-start;
-  width: 50%;
-}
-
-#sk-container-id-16 div.sk-parallel-item:only-child::after {
-  width: 0;
-}
-
-/* Serial-specific style estimator block */
-
-#sk-container-id-16 div.sk-serial {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background-color: var(--sklearn-color-background);
-  padding-right: 1em;
-  padding-left: 1em;
-}
-
-
-/* Toggleable style: style used for estimator/Pipeline/ColumnTransformer box that is
-clickable and can be expanded/collapsed.
-- Pipeline and ColumnTransformer use this feature and define the default style
-- Estimators will overwrite some part of the style using the `sk-estimator` class
-*/
-
-/* Pipeline and ColumnTransformer style (default) */
-
-#sk-container-id-16 div.sk-toggleable {
-  /* Default theme specific background. It is overwritten whether we have a
-  specific estimator or a Pipeline/ColumnTransformer */
-  background-color: var(--sklearn-color-background);
-}
-
-/* Toggleable label */
-#sk-container-id-16 label.sk-toggleable__label {
-  cursor: pointer;
-  display: block;
-  width: 100%;
-  margin-bottom: 0;
-  padding: 0.5em;
-  box-sizing: border-box;
-  text-align: center;
-}
-
-#sk-container-id-16 label.sk-toggleable__label-arrow:before {
-  /* Arrow on the left of the label */
-  content: "▸";
-  float: left;
-  margin-right: 0.25em;
-  color: var(--sklearn-color-icon);
-}
-
-#sk-container-id-16 label.sk-toggleable__label-arrow:hover:before {
-  color: var(--sklearn-color-text);
-}
-
-/* Toggleable content - dropdown */
-
-#sk-container-id-16 div.sk-toggleable__content {
-  max-height: 0;
-  max-width: 0;
-  overflow: hidden;
-  text-align: left;
-  /* unfitted */
-  background-color: var(--sklearn-color-unfitted-level-0);
-}
-
-#sk-container-id-16 div.sk-toggleable__content.fitted {
-  /* fitted */
-  background-color: var(--sklearn-color-fitted-level-0);
-}
-
-#sk-container-id-16 div.sk-toggleable__content pre {
-  margin: 0.2em;
-  border-radius: 0.25em;
-  color: var(--sklearn-color-text);
-  /* unfitted */
-  background-color: var(--sklearn-color-unfitted-level-0);
-}
-
-#sk-container-id-16 div.sk-toggleable__content.fitted pre {
-  /* unfitted */
-  background-color: var(--sklearn-color-fitted-level-0);
-}
-
-#sk-container-id-16 input.sk-toggleable__control:checked~div.sk-toggleable__content {
-  /* Expand drop-down */
-  max-height: 200px;
-  max-width: 100%;
-  overflow: auto;
-}
-
-#sk-container-id-16 input.sk-toggleable__control:checked~label.sk-toggleable__label-arrow:before {
-  content: "▾";
-}
-
-/* Pipeline/ColumnTransformer-specific style */
-
-#sk-container-id-16 div.sk-label input.sk-toggleable__control:checked~label.sk-toggleable__label {
-  color: var(--sklearn-color-text);
-  background-color: var(--sklearn-color-unfitted-level-2);
-}
-
-#sk-container-id-16 div.sk-label.fitted input.sk-toggleable__control:checked~label.sk-toggleable__label {
-  background-color: var(--sklearn-color-fitted-level-2);
-}
-
-/* Estimator-specific style */
-
-/* Colorize estimator box */
-#sk-container-id-16 div.sk-estimator input.sk-toggleable__control:checked~label.sk-toggleable__label {
-  /* unfitted */
-  background-color: var(--sklearn-color-unfitted-level-2);
-}
-
-#sk-container-id-16 div.sk-estimator.fitted input.sk-toggleable__control:checked~label.sk-toggleable__label {
-  /* fitted */
-  background-color: var(--sklearn-color-fitted-level-2);
-}
-
-#sk-container-id-16 div.sk-label label.sk-toggleable__label,
-#sk-container-id-16 div.sk-label label {
-  /* The background is the default theme color */
-  color: var(--sklearn-color-text-on-default-background);
-}
-
-/* On hover, darken the color of the background */
-#sk-container-id-16 div.sk-label:hover label.sk-toggleable__label {
-  color: var(--sklearn-color-text);
-  background-color: var(--sklearn-color-unfitted-level-2);
-}
-
-/* Label box, darken color on hover, fitted */
-#sk-container-id-16 div.sk-label.fitted:hover label.sk-toggleable__label.fitted {
-  color: var(--sklearn-color-text);
-  background-color: var(--sklearn-color-fitted-level-2);
-}
-
-/* Estimator label */
-
-#sk-container-id-16 div.sk-label label {
-  font-family: monospace;
-  font-weight: bold;
-  display: inline-block;
-  line-height: 1.2em;
-}
-
-#sk-container-id-16 div.sk-label-container {
-  text-align: center;
-}
-
-/* Estimator-specific */
-#sk-container-id-16 div.sk-estimator {
-  font-family: monospace;
-  border: 1px dotted var(--sklearn-color-border-box);
-  border-radius: 0.25em;
-  box-sizing: border-box;
-  margin-bottom: 0.5em;
-  /* unfitted */
-  background-color: var(--sklearn-color-unfitted-level-0);
-}
-
-#sk-container-id-16 div.sk-estimator.fitted {
-  /* fitted */
-  background-color: var(--sklearn-color-fitted-level-0);
-}
-
-/* on hover */
-#sk-container-id-16 div.sk-estimator:hover {
-  /* unfitted */
-  background-color: var(--sklearn-color-unfitted-level-2);
-}
-
-#sk-container-id-16 div.sk-estimator.fitted:hover {
-  /* fitted */
-  background-color: var(--sklearn-color-fitted-level-2);
-}
-
-/* Specification for estimator info (e.g. "i" and "?") */
-
-/* Common style for "i" and "?" */
-
-.sk-estimator-doc-link,
-a:link.sk-estimator-doc-link,
-a:visited.sk-estimator-doc-link {
-  float: right;
-  font-size: smaller;
-  line-height: 1em;
-  font-family: monospace;
-  background-color: var(--sklearn-color-background);
-  border-radius: 1em;
-  height: 1em;
-  width: 1em;
-  text-decoration: none !important;
-  margin-left: 1ex;
-  /* unfitted */
-  border: var(--sklearn-color-unfitted-level-1) 1pt solid;
-  color: var(--sklearn-color-unfitted-level-1);
-}
-
-.sk-estimator-doc-link.fitted,
-a:link.sk-estimator-doc-link.fitted,
-a:visited.sk-estimator-doc-link.fitted {
-  /* fitted */
-  border: var(--sklearn-color-fitted-level-1) 1pt solid;
-  color: var(--sklearn-color-fitted-level-1);
-}
-
-/* On hover */
-div.sk-estimator:hover .sk-estimator-doc-link:hover,
-.sk-estimator-doc-link:hover,
-div.sk-label-container:hover .sk-estimator-doc-link:hover,
-.sk-estimator-doc-link:hover {
-  /* unfitted */
-  background-color: var(--sklearn-color-unfitted-level-3);
-  color: var(--sklearn-color-background);
-  text-decoration: none;
-}
-
-div.sk-estimator.fitted:hover .sk-estimator-doc-link.fitted:hover,
-.sk-estimator-doc-link.fitted:hover,
-div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
-.sk-estimator-doc-link.fitted:hover {
-  /* fitted */
-  background-color: var(--sklearn-color-fitted-level-3);
-  color: var(--sklearn-color-background);
-  text-decoration: none;
-}
-
-/* Span, style for the box shown on hovering the info icon */
-.sk-estimator-doc-link span {
-  display: none;
-  z-index: 9999;
-  position: relative;
-  font-weight: normal;
-  right: .2ex;
-  padding: .5ex;
-  margin: .5ex;
-  width: min-content;
-  min-width: 20ex;
-  max-width: 50ex;
-  color: var(--sklearn-color-text);
-  box-shadow: 2pt 2pt 4pt #999;
-  /* unfitted */
-  background: var(--sklearn-color-unfitted-level-0);
-  border: .5pt solid var(--sklearn-color-unfitted-level-3);
-}
-
-.sk-estimator-doc-link.fitted span {
-  /* fitted */
-  background: var(--sklearn-color-fitted-level-0);
-  border: var(--sklearn-color-fitted-level-3);
-}
-
-.sk-estimator-doc-link:hover span {
-  display: block;
-}
-
-/* "?"-specific style due to the `<a>` HTML tag */
-
-#sk-container-id-16 a.estimator_doc_link {
-  float: right;
-  font-size: 1rem;
-  line-height: 1em;
-  font-family: monospace;
-  background-color: var(--sklearn-color-background);
-  border-radius: 1rem;
-  height: 1rem;
-  width: 1rem;
-  text-decoration: none;
-  /* unfitted */
-  color: var(--sklearn-color-unfitted-level-1);
-  border: var(--sklearn-color-unfitted-level-1) 1pt solid;
-}
-
-#sk-container-id-16 a.estimator_doc_link.fitted {
-  /* fitted */
-  border: var(--sklearn-color-fitted-level-1) 1pt solid;
-  color: var(--sklearn-color-fitted-level-1);
-}
-
-/* On hover */
-#sk-container-id-16 a.estimator_doc_link:hover {
-  /* unfitted */
-  background-color: var(--sklearn-color-unfitted-level-3);
-  color: var(--sklearn-color-background);
-  text-decoration: none;
-}
-
-#sk-container-id-16 a.estimator_doc_link.fitted:hover {
-  /* fitted */
-  background-color: var(--sklearn-color-fitted-level-3);
-}
-</style><div id="sk-container-id-16" class="sk-top-container"><div class="sk-text-repr-fallback"><pre>GridSearchCV(cv=4, estimator=DecisionTreeClassifier(random_state=0),
-             param_grid={&#x27;max_depth&#x27;: [4, 6, 8, None],
-                         &#x27;min_samples_leaf&#x27;: [2, 5, 1],
-                         &#x27;min_samples_split&#x27;: [2, 4, 6]},
-             refit=&#x27;roc_auc_score&#x27;,
-             scoring={&#x27;accuracy&#x27;: &#x27;accuracy&#x27;,
-                      &#x27;f1&#x27;: make_scorer(f1_score, response_method=&#x27;predict&#x27;),
-                      &#x27;precision&#x27;: make_scorer(precision_score, response_method=&#x27;predict&#x27;),
-                      &#x27;recall&#x27;: make_scorer(recall_score, response_method=&#x27;predict&#x27;),
-                      &#x27;roc_auc_score&#x27;: make_scorer(roc_auc_score, response_method=&#x27;predict&#x27;)})</pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br />On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b></div><div class="sk-container" hidden><div class="sk-item sk-dashed-wrapped"><div class="sk-label-container"><div class="sk-label fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-32" type="checkbox" ><label for="sk-estimator-id-32" class="sk-toggleable__label fitted sk-toggleable__label-arrow fitted">&nbsp;&nbsp;GridSearchCV<a class="sk-estimator-doc-link fitted" rel="noreferrer" target="_blank" href="https://scikit-learn.org/1.4/modules/generated/sklearn.model_selection.GridSearchCV.html">?<span>Documentation for GridSearchCV</span></a><span class="sk-estimator-doc-link fitted">i<span>Fitted</span></span></label><div class="sk-toggleable__content fitted"><pre>GridSearchCV(cv=4, estimator=DecisionTreeClassifier(random_state=0),
-             param_grid={&#x27;max_depth&#x27;: [4, 6, 8, None],
-                         &#x27;min_samples_leaf&#x27;: [2, 5, 1],
-                         &#x27;min_samples_split&#x27;: [2, 4, 6]},
-             refit=&#x27;roc_auc_score&#x27;,
-             scoring={&#x27;accuracy&#x27;: &#x27;accuracy&#x27;,
-                      &#x27;f1&#x27;: make_scorer(f1_score, response_method=&#x27;predict&#x27;),
-                      &#x27;precision&#x27;: make_scorer(precision_score, response_method=&#x27;predict&#x27;),
-                      &#x27;recall&#x27;: make_scorer(recall_score, response_method=&#x27;predict&#x27;),
-                      &#x27;roc_auc_score&#x27;: make_scorer(roc_auc_score, response_method=&#x27;predict&#x27;)})</pre></div> </div></div><div class="sk-parallel"><div class="sk-parallel-item"><div class="sk-item"><div class="sk-label-container"><div class="sk-label fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-33" type="checkbox" ><label for="sk-estimator-id-33" class="sk-toggleable__label fitted sk-toggleable__label-arrow fitted">estimator: DecisionTreeClassifier</label><div class="sk-toggleable__content fitted"><pre>DecisionTreeClassifier(random_state=0)</pre></div> </div></div><div class="sk-serial"><div class="sk-item"><div class="sk-estimator fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-34" type="checkbox" ><label for="sk-estimator-id-34" class="sk-toggleable__label fitted sk-toggleable__label-arrow fitted">&nbsp;DecisionTreeClassifier<a class="sk-estimator-doc-link fitted" rel="noreferrer" target="_blank" href="https://scikit-learn.org/1.4/modules/generated/sklearn.tree.DecisionTreeClassifier.html">?<span>Documentation for DecisionTreeClassifier</span></a></label><div class="sk-toggleable__content fitted"><pre>DecisionTreeClassifier(random_state=0)</pre></div> </div></div></div></div></div></div></div></div></div>
-
-
-
 
 ```python
 tree1.best_estimator_
 ```
 
 
-
-
-<style>#sk-container-id-17 {
-  /* Definition of color scheme common for light and dark mode */
-  --sklearn-color-text: black;
-  --sklearn-color-line: gray;
-  /* Definition of color scheme for unfitted estimators */
-  --sklearn-color-unfitted-level-0: #fff5e6;
-  --sklearn-color-unfitted-level-1: #f6e4d2;
-  --sklearn-color-unfitted-level-2: #ffe0b3;
-  --sklearn-color-unfitted-level-3: chocolate;
-  /* Definition of color scheme for fitted estimators */
-  --sklearn-color-fitted-level-0: #f0f8ff;
-  --sklearn-color-fitted-level-1: #d4ebff;
-  --sklearn-color-fitted-level-2: #b3dbfd;
-  --sklearn-color-fitted-level-3: cornflowerblue;
-
-  /* Specific color for light theme */
-  --sklearn-color-text-on-default-background: var(--sg-text-color, var(--theme-code-foreground, var(--jp-content-font-color1, black)));
-  --sklearn-color-background: var(--sg-background-color, var(--theme-background, var(--jp-layout-color0, white)));
-  --sklearn-color-border-box: var(--sg-text-color, var(--theme-code-foreground, var(--jp-content-font-color1, black)));
-  --sklearn-color-icon: #696969;
-
-  @media (prefers-color-scheme: dark) {
-    /* Redefinition of color scheme for dark theme */
-    --sklearn-color-text-on-default-background: var(--sg-text-color, var(--theme-code-foreground, var(--jp-content-font-color1, white)));
-    --sklearn-color-background: var(--sg-background-color, var(--theme-background, var(--jp-layout-color0, #111)));
-    --sklearn-color-border-box: var(--sg-text-color, var(--theme-code-foreground, var(--jp-content-font-color1, white)));
-    --sklearn-color-icon: #878787;
-  }
-}
-
-#sk-container-id-17 {
-  color: var(--sklearn-color-text);
-}
-
-#sk-container-id-17 pre {
-  padding: 0;
-}
-
-#sk-container-id-17 input.sk-hidden--visually {
-  border: 0;
-  clip: rect(1px 1px 1px 1px);
-  clip: rect(1px, 1px, 1px, 1px);
-  height: 1px;
-  margin: -1px;
-  overflow: hidden;
-  padding: 0;
-  position: absolute;
-  width: 1px;
-}
-
-#sk-container-id-17 div.sk-dashed-wrapped {
-  border: 1px dashed var(--sklearn-color-line);
-  margin: 0 0.4em 0.5em 0.4em;
-  box-sizing: border-box;
-  padding-bottom: 0.4em;
-  background-color: var(--sklearn-color-background);
-}
-
-#sk-container-id-17 div.sk-container {
-  /* jupyter's `normalize.less` sets `[hidden] { display: none; }`
-     but bootstrap.min.css set `[hidden] { display: none !important; }`
-     so we also need the `!important` here to be able to override the
-     default hidden behavior on the sphinx rendered scikit-learn.org.
-     See: https://github.com/scikit-learn/scikit-learn/issues/21755 */
-  display: inline-block !important;
-  position: relative;
-}
-
-#sk-container-id-17 div.sk-text-repr-fallback {
-  display: none;
-}
-
-div.sk-parallel-item,
-div.sk-serial,
-div.sk-item {
-  /* draw centered vertical line to link estimators */
-  background-image: linear-gradient(var(--sklearn-color-text-on-default-background), var(--sklearn-color-text-on-default-background));
-  background-size: 2px 100%;
-  background-repeat: no-repeat;
-  background-position: center center;
-}
-
-/* Parallel-specific style estimator block */
-
-#sk-container-id-17 div.sk-parallel-item::after {
-  content: "";
-  width: 100%;
-  border-bottom: 2px solid var(--sklearn-color-text-on-default-background);
-  flex-grow: 1;
-}
-
-#sk-container-id-17 div.sk-parallel {
-  display: flex;
-  align-items: stretch;
-  justify-content: center;
-  background-color: var(--sklearn-color-background);
-  position: relative;
-}
-
-#sk-container-id-17 div.sk-parallel-item {
-  display: flex;
-  flex-direction: column;
-}
-
-#sk-container-id-17 div.sk-parallel-item:first-child::after {
-  align-self: flex-end;
-  width: 50%;
-}
-
-#sk-container-id-17 div.sk-parallel-item:last-child::after {
-  align-self: flex-start;
-  width: 50%;
-}
-
-#sk-container-id-17 div.sk-parallel-item:only-child::after {
-  width: 0;
-}
-
-/* Serial-specific style estimator block */
-
-#sk-container-id-17 div.sk-serial {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background-color: var(--sklearn-color-background);
-  padding-right: 1em;
-  padding-left: 1em;
-}
-
-
-/* Toggleable style: style used for estimator/Pipeline/ColumnTransformer box that is
-clickable and can be expanded/collapsed.
-- Pipeline and ColumnTransformer use this feature and define the default style
-- Estimators will overwrite some part of the style using the `sk-estimator` class
-*/
-
-/* Pipeline and ColumnTransformer style (default) */
-
-#sk-container-id-17 div.sk-toggleable {
-  /* Default theme specific background. It is overwritten whether we have a
-  specific estimator or a Pipeline/ColumnTransformer */
-  background-color: var(--sklearn-color-background);
-}
-
-/* Toggleable label */
-#sk-container-id-17 label.sk-toggleable__label {
-  cursor: pointer;
-  display: block;
-  width: 100%;
-  margin-bottom: 0;
-  padding: 0.5em;
-  box-sizing: border-box;
-  text-align: center;
-}
-
-#sk-container-id-17 label.sk-toggleable__label-arrow:before {
-  /* Arrow on the left of the label */
-  content: "▸";
-  float: left;
-  margin-right: 0.25em;
-  color: var(--sklearn-color-icon);
-}
-
-#sk-container-id-17 label.sk-toggleable__label-arrow:hover:before {
-  color: var(--sklearn-color-text);
-}
-
-/* Toggleable content - dropdown */
-
-#sk-container-id-17 div.sk-toggleable__content {
-  max-height: 0;
-  max-width: 0;
-  overflow: hidden;
-  text-align: left;
-  /* unfitted */
-  background-color: var(--sklearn-color-unfitted-level-0);
-}
-
-#sk-container-id-17 div.sk-toggleable__content.fitted {
-  /* fitted */
-  background-color: var(--sklearn-color-fitted-level-0);
-}
-
-#sk-container-id-17 div.sk-toggleable__content pre {
-  margin: 0.2em;
-  border-radius: 0.25em;
-  color: var(--sklearn-color-text);
-  /* unfitted */
-  background-color: var(--sklearn-color-unfitted-level-0);
-}
-
-#sk-container-id-17 div.sk-toggleable__content.fitted pre {
-  /* unfitted */
-  background-color: var(--sklearn-color-fitted-level-0);
-}
-
-#sk-container-id-17 input.sk-toggleable__control:checked~div.sk-toggleable__content {
-  /* Expand drop-down */
-  max-height: 200px;
-  max-width: 100%;
-  overflow: auto;
-}
-
-#sk-container-id-17 input.sk-toggleable__control:checked~label.sk-toggleable__label-arrow:before {
-  content: "▾";
-}
-
-/* Pipeline/ColumnTransformer-specific style */
-
-#sk-container-id-17 div.sk-label input.sk-toggleable__control:checked~label.sk-toggleable__label {
-  color: var(--sklearn-color-text);
-  background-color: var(--sklearn-color-unfitted-level-2);
-}
-
-#sk-container-id-17 div.sk-label.fitted input.sk-toggleable__control:checked~label.sk-toggleable__label {
-  background-color: var(--sklearn-color-fitted-level-2);
-}
-
-/* Estimator-specific style */
-
-/* Colorize estimator box */
-#sk-container-id-17 div.sk-estimator input.sk-toggleable__control:checked~label.sk-toggleable__label {
-  /* unfitted */
-  background-color: var(--sklearn-color-unfitted-level-2);
-}
-
-#sk-container-id-17 div.sk-estimator.fitted input.sk-toggleable__control:checked~label.sk-toggleable__label {
-  /* fitted */
-  background-color: var(--sklearn-color-fitted-level-2);
-}
-
-#sk-container-id-17 div.sk-label label.sk-toggleable__label,
-#sk-container-id-17 div.sk-label label {
-  /* The background is the default theme color */
-  color: var(--sklearn-color-text-on-default-background);
-}
-
-/* On hover, darken the color of the background */
-#sk-container-id-17 div.sk-label:hover label.sk-toggleable__label {
-  color: var(--sklearn-color-text);
-  background-color: var(--sklearn-color-unfitted-level-2);
-}
-
-/* Label box, darken color on hover, fitted */
-#sk-container-id-17 div.sk-label.fitted:hover label.sk-toggleable__label.fitted {
-  color: var(--sklearn-color-text);
-  background-color: var(--sklearn-color-fitted-level-2);
-}
-
-/* Estimator label */
-
-#sk-container-id-17 div.sk-label label {
-  font-family: monospace;
-  font-weight: bold;
-  display: inline-block;
-  line-height: 1.2em;
-}
-
-#sk-container-id-17 div.sk-label-container {
-  text-align: center;
-}
-
-/* Estimator-specific */
-#sk-container-id-17 div.sk-estimator {
-  font-family: monospace;
-  border: 1px dotted var(--sklearn-color-border-box);
-  border-radius: 0.25em;
-  box-sizing: border-box;
-  margin-bottom: 0.5em;
-  /* unfitted */
-  background-color: var(--sklearn-color-unfitted-level-0);
-}
-
-#sk-container-id-17 div.sk-estimator.fitted {
-  /* fitted */
-  background-color: var(--sklearn-color-fitted-level-0);
-}
-
-/* on hover */
-#sk-container-id-17 div.sk-estimator:hover {
-  /* unfitted */
-  background-color: var(--sklearn-color-unfitted-level-2);
-}
-
-#sk-container-id-17 div.sk-estimator.fitted:hover {
-  /* fitted */
-  background-color: var(--sklearn-color-fitted-level-2);
-}
-
-/* Specification for estimator info (e.g. "i" and "?") */
-
-/* Common style for "i" and "?" */
-
-.sk-estimator-doc-link,
-a:link.sk-estimator-doc-link,
-a:visited.sk-estimator-doc-link {
-  float: right;
-  font-size: smaller;
-  line-height: 1em;
-  font-family: monospace;
-  background-color: var(--sklearn-color-background);
-  border-radius: 1em;
-  height: 1em;
-  width: 1em;
-  text-decoration: none !important;
-  margin-left: 1ex;
-  /* unfitted */
-  border: var(--sklearn-color-unfitted-level-1) 1pt solid;
-  color: var(--sklearn-color-unfitted-level-1);
-}
-
-.sk-estimator-doc-link.fitted,
-a:link.sk-estimator-doc-link.fitted,
-a:visited.sk-estimator-doc-link.fitted {
-  /* fitted */
-  border: var(--sklearn-color-fitted-level-1) 1pt solid;
-  color: var(--sklearn-color-fitted-level-1);
-}
-
-/* On hover */
-div.sk-estimator:hover .sk-estimator-doc-link:hover,
-.sk-estimator-doc-link:hover,
-div.sk-label-container:hover .sk-estimator-doc-link:hover,
-.sk-estimator-doc-link:hover {
-  /* unfitted */
-  background-color: var(--sklearn-color-unfitted-level-3);
-  color: var(--sklearn-color-background);
-  text-decoration: none;
-}
-
-div.sk-estimator.fitted:hover .sk-estimator-doc-link.fitted:hover,
-.sk-estimator-doc-link.fitted:hover,
-div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
-.sk-estimator-doc-link.fitted:hover {
-  /* fitted */
-  background-color: var(--sklearn-color-fitted-level-3);
-  color: var(--sklearn-color-background);
-  text-decoration: none;
-}
-
-/* Span, style for the box shown on hovering the info icon */
-.sk-estimator-doc-link span {
-  display: none;
-  z-index: 9999;
-  position: relative;
-  font-weight: normal;
-  right: .2ex;
-  padding: .5ex;
-  margin: .5ex;
-  width: min-content;
-  min-width: 20ex;
-  max-width: 50ex;
-  color: var(--sklearn-color-text);
-  box-shadow: 2pt 2pt 4pt #999;
-  /* unfitted */
-  background: var(--sklearn-color-unfitted-level-0);
-  border: .5pt solid var(--sklearn-color-unfitted-level-3);
-}
-
-.sk-estimator-doc-link.fitted span {
-  /* fitted */
-  background: var(--sklearn-color-fitted-level-0);
-  border: var(--sklearn-color-fitted-level-3);
-}
-
-.sk-estimator-doc-link:hover span {
-  display: block;
-}
-
-/* "?"-specific style due to the `<a>` HTML tag */
-
-#sk-container-id-17 a.estimator_doc_link {
-  float: right;
-  font-size: 1rem;
-  line-height: 1em;
-  font-family: monospace;
-  background-color: var(--sklearn-color-background);
-  border-radius: 1rem;
-  height: 1rem;
-  width: 1rem;
-  text-decoration: none;
-  /* unfitted */
-  color: var(--sklearn-color-unfitted-level-1);
-  border: var(--sklearn-color-unfitted-level-1) 1pt solid;
-}
-
-#sk-container-id-17 a.estimator_doc_link.fitted {
-  /* fitted */
-  border: var(--sklearn-color-fitted-level-1) 1pt solid;
-  color: var(--sklearn-color-fitted-level-1);
-}
-
-/* On hover */
-#sk-container-id-17 a.estimator_doc_link:hover {
-  /* unfitted */
-  background-color: var(--sklearn-color-unfitted-level-3);
-  color: var(--sklearn-color-background);
-  text-decoration: none;
-}
-
-#sk-container-id-17 a.estimator_doc_link.fitted:hover {
-  /* fitted */
-  background-color: var(--sklearn-color-fitted-level-3);
-}
-</style><div id="sk-container-id-17" class="sk-top-container"><div class="sk-text-repr-fallback"><pre>DecisionTreeClassifier(max_depth=8, min_samples_leaf=2, min_samples_split=6,
-                       random_state=0)</pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br />On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b></div><div class="sk-container" hidden><div class="sk-item"><div class="sk-estimator fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-35" type="checkbox" checked><label for="sk-estimator-id-35" class="sk-toggleable__label fitted sk-toggleable__label-arrow fitted">&nbsp;&nbsp;DecisionTreeClassifier<a class="sk-estimator-doc-link fitted" rel="noreferrer" target="_blank" href="https://scikit-learn.org/1.4/modules/generated/sklearn.tree.DecisionTreeClassifier.html">?<span>Documentation for DecisionTreeClassifier</span></a><span class="sk-estimator-doc-link fitted">i<span>Fitted</span></span></label><div class="sk-toggleable__content fitted"><pre>DecisionTreeClassifier(max_depth=8, min_samples_leaf=2, min_samples_split=6,
-                       random_state=0)</pre></div> </div></div></div></div>
-
-
-
-
 ```python
 # Check best AUC score on CV
 tree1.best_score_
 ```
-
-
-
-
-    0.9548070613085594
-
-
 
 
 ```python
@@ -3368,51 +861,6 @@ tree1_cv_results = make_results('decision tree cv', tree1, 'auc')
 tree1_cv_results
 ```
 
-
-
-
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>model</th>
-      <th>precision</th>
-      <th>recall</th>
-      <th>F1</th>
-      <th>accuracy</th>
-      <th>auc</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>decision tree cv</td>
-      <td>0.971662</td>
-      <td>0.914947</td>
-      <td>0.94238</td>
-      <td>0.98143</td>
-      <td>0.954807</td>
-    </tr>
-  </tbody>
-</table>
-</div>
-
-
-
 **Plot the ROC curve : Receiver Operating Characteristic**
 It is a graphical representation of the performance of a binary classifier at different classification thresholds. 
 
@@ -3438,35 +886,37 @@ y_probs = tree1.predict_proba(X_test)[:, 1]
 fpr, tpr, thresholds = roc_curve(y_test, y_probs)
 roc_auc = auc(fpr, tpr)
 
+# Create a new figure and axis
+fig, ax = plt.subplots(figsize=(8, 6))
+
 # Plot ROC curve with thresholds
-plt.figure(figsize=(8, 6))
-plt.plot(fpr, tpr, color='blue', lw=2, label=f'ROC Curve (AUC = {roc_auc:.2f})')
-plt.plot([0, 1], [0, 1], color='gray', linestyle='--')  # Diagonal line representing random guessing
+ax.plot(fpr, tpr, color='blue', lw=2, label=f'ROC Curve (AUC = {roc_auc:.2f})')
+ax.plot([0, 1], [0, 1], color='gray', linestyle='--')  # Diagonal line representing random guessing
 
 # Plot thresholds on the ROC curve
 threshold_values = [0.2, 0.5, 0.7]  # Example threshold values to plot
 for threshold in threshold_values:
     idx = np.argmin(np.abs(thresholds - threshold))
-    plt.scatter(fpr[idx], tpr[idx], s=100, label=f'Threshold = {threshold}', marker='o')
+    ax.scatter(fpr[idx], tpr[idx], s=100, label=f'Threshold = {threshold}', marker='o')
 
 # Annotate points with threshold values
 for i, threshold in enumerate(threshold_values):
     idx = np.argmin(np.abs(thresholds - threshold))
-    plt.annotate(f'{threshold}', (fpr[idx], tpr[idx] - 0.1), color='black', fontsize=10, ha='center')
+    ax.annotate(f'{threshold}', (fpr[idx], tpr[idx] - 0.1), color='black', fontsize=10, ha='center')
 
-plt.xlabel('False Positive Rate (FPR)')
-plt.ylabel('True Positive Rate (TPR)')
-plt.title('ROC Curve with Thresholds')
-plt.legend(loc='lower right')
-plt.grid(True)
+ax.set_xlabel('False Positive Rate (FPR)')
+ax.set_ylabel('True Positive Rate (TPR)')
+ax.set_title('ROC Curve with Thresholds')
+ax.legend(loc='lower right')
+ax.grid(True)
+
+# Save the plot after it has been displayed
+plt.tight_layout()
+plt.savefig("ROC_Curve1.pdf")
+
+# Display the plot
 plt.show()
 ```
-
-
-    
-![png](output_109_0.png)
-    
-
 
 #### Random forest round 1
 
@@ -3505,431 +955,8 @@ rf1 = GridSearchCV(rf, cv_params, scoring=scoring, cv=4, refit='roc_auc_score')
 
 
 ```python
-rf1 = read_pickle(path,'hr_rf1')
-```
-
-
-```python
-rf1.best_estimator_
-```
-
-
-
-
-<style>#sk-container-id-18 {
-  /* Definition of color scheme common for light and dark mode */
-  --sklearn-color-text: black;
-  --sklearn-color-line: gray;
-  /* Definition of color scheme for unfitted estimators */
-  --sklearn-color-unfitted-level-0: #fff5e6;
-  --sklearn-color-unfitted-level-1: #f6e4d2;
-  --sklearn-color-unfitted-level-2: #ffe0b3;
-  --sklearn-color-unfitted-level-3: chocolate;
-  /* Definition of color scheme for fitted estimators */
-  --sklearn-color-fitted-level-0: #f0f8ff;
-  --sklearn-color-fitted-level-1: #d4ebff;
-  --sklearn-color-fitted-level-2: #b3dbfd;
-  --sklearn-color-fitted-level-3: cornflowerblue;
-
-  /* Specific color for light theme */
-  --sklearn-color-text-on-default-background: var(--sg-text-color, var(--theme-code-foreground, var(--jp-content-font-color1, black)));
-  --sklearn-color-background: var(--sg-background-color, var(--theme-background, var(--jp-layout-color0, white)));
-  --sklearn-color-border-box: var(--sg-text-color, var(--theme-code-foreground, var(--jp-content-font-color1, black)));
-  --sklearn-color-icon: #696969;
-
-  @media (prefers-color-scheme: dark) {
-    /* Redefinition of color scheme for dark theme */
-    --sklearn-color-text-on-default-background: var(--sg-text-color, var(--theme-code-foreground, var(--jp-content-font-color1, white)));
-    --sklearn-color-background: var(--sg-background-color, var(--theme-background, var(--jp-layout-color0, #111)));
-    --sklearn-color-border-box: var(--sg-text-color, var(--theme-code-foreground, var(--jp-content-font-color1, white)));
-    --sklearn-color-icon: #878787;
-  }
-}
-
-#sk-container-id-18 {
-  color: var(--sklearn-color-text);
-}
-
-#sk-container-id-18 pre {
-  padding: 0;
-}
-
-#sk-container-id-18 input.sk-hidden--visually {
-  border: 0;
-  clip: rect(1px 1px 1px 1px);
-  clip: rect(1px, 1px, 1px, 1px);
-  height: 1px;
-  margin: -1px;
-  overflow: hidden;
-  padding: 0;
-  position: absolute;
-  width: 1px;
-}
-
-#sk-container-id-18 div.sk-dashed-wrapped {
-  border: 1px dashed var(--sklearn-color-line);
-  margin: 0 0.4em 0.5em 0.4em;
-  box-sizing: border-box;
-  padding-bottom: 0.4em;
-  background-color: var(--sklearn-color-background);
-}
-
-#sk-container-id-18 div.sk-container {
-  /* jupyter's `normalize.less` sets `[hidden] { display: none; }`
-     but bootstrap.min.css set `[hidden] { display: none !important; }`
-     so we also need the `!important` here to be able to override the
-     default hidden behavior on the sphinx rendered scikit-learn.org.
-     See: https://github.com/scikit-learn/scikit-learn/issues/21755 */
-  display: inline-block !important;
-  position: relative;
-}
-
-#sk-container-id-18 div.sk-text-repr-fallback {
-  display: none;
-}
-
-div.sk-parallel-item,
-div.sk-serial,
-div.sk-item {
-  /* draw centered vertical line to link estimators */
-  background-image: linear-gradient(var(--sklearn-color-text-on-default-background), var(--sklearn-color-text-on-default-background));
-  background-size: 2px 100%;
-  background-repeat: no-repeat;
-  background-position: center center;
-}
-
-/* Parallel-specific style estimator block */
-
-#sk-container-id-18 div.sk-parallel-item::after {
-  content: "";
-  width: 100%;
-  border-bottom: 2px solid var(--sklearn-color-text-on-default-background);
-  flex-grow: 1;
-}
-
-#sk-container-id-18 div.sk-parallel {
-  display: flex;
-  align-items: stretch;
-  justify-content: center;
-  background-color: var(--sklearn-color-background);
-  position: relative;
-}
-
-#sk-container-id-18 div.sk-parallel-item {
-  display: flex;
-  flex-direction: column;
-}
-
-#sk-container-id-18 div.sk-parallel-item:first-child::after {
-  align-self: flex-end;
-  width: 50%;
-}
-
-#sk-container-id-18 div.sk-parallel-item:last-child::after {
-  align-self: flex-start;
-  width: 50%;
-}
-
-#sk-container-id-18 div.sk-parallel-item:only-child::after {
-  width: 0;
-}
-
-/* Serial-specific style estimator block */
-
-#sk-container-id-18 div.sk-serial {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background-color: var(--sklearn-color-background);
-  padding-right: 1em;
-  padding-left: 1em;
-}
-
-
-/* Toggleable style: style used for estimator/Pipeline/ColumnTransformer box that is
-clickable and can be expanded/collapsed.
-- Pipeline and ColumnTransformer use this feature and define the default style
-- Estimators will overwrite some part of the style using the `sk-estimator` class
-*/
-
-/* Pipeline and ColumnTransformer style (default) */
-
-#sk-container-id-18 div.sk-toggleable {
-  /* Default theme specific background. It is overwritten whether we have a
-  specific estimator or a Pipeline/ColumnTransformer */
-  background-color: var(--sklearn-color-background);
-}
-
-/* Toggleable label */
-#sk-container-id-18 label.sk-toggleable__label {
-  cursor: pointer;
-  display: block;
-  width: 100%;
-  margin-bottom: 0;
-  padding: 0.5em;
-  box-sizing: border-box;
-  text-align: center;
-}
-
-#sk-container-id-18 label.sk-toggleable__label-arrow:before {
-  /* Arrow on the left of the label */
-  content: "▸";
-  float: left;
-  margin-right: 0.25em;
-  color: var(--sklearn-color-icon);
-}
-
-#sk-container-id-18 label.sk-toggleable__label-arrow:hover:before {
-  color: var(--sklearn-color-text);
-}
-
-/* Toggleable content - dropdown */
-
-#sk-container-id-18 div.sk-toggleable__content {
-  max-height: 0;
-  max-width: 0;
-  overflow: hidden;
-  text-align: left;
-  /* unfitted */
-  background-color: var(--sklearn-color-unfitted-level-0);
-}
-
-#sk-container-id-18 div.sk-toggleable__content.fitted {
-  /* fitted */
-  background-color: var(--sklearn-color-fitted-level-0);
-}
-
-#sk-container-id-18 div.sk-toggleable__content pre {
-  margin: 0.2em;
-  border-radius: 0.25em;
-  color: var(--sklearn-color-text);
-  /* unfitted */
-  background-color: var(--sklearn-color-unfitted-level-0);
-}
-
-#sk-container-id-18 div.sk-toggleable__content.fitted pre {
-  /* unfitted */
-  background-color: var(--sklearn-color-fitted-level-0);
-}
-
-#sk-container-id-18 input.sk-toggleable__control:checked~div.sk-toggleable__content {
-  /* Expand drop-down */
-  max-height: 200px;
-  max-width: 100%;
-  overflow: auto;
-}
-
-#sk-container-id-18 input.sk-toggleable__control:checked~label.sk-toggleable__label-arrow:before {
-  content: "▾";
-}
-
-/* Pipeline/ColumnTransformer-specific style */
-
-#sk-container-id-18 div.sk-label input.sk-toggleable__control:checked~label.sk-toggleable__label {
-  color: var(--sklearn-color-text);
-  background-color: var(--sklearn-color-unfitted-level-2);
-}
-
-#sk-container-id-18 div.sk-label.fitted input.sk-toggleable__control:checked~label.sk-toggleable__label {
-  background-color: var(--sklearn-color-fitted-level-2);
-}
-
-/* Estimator-specific style */
-
-/* Colorize estimator box */
-#sk-container-id-18 div.sk-estimator input.sk-toggleable__control:checked~label.sk-toggleable__label {
-  /* unfitted */
-  background-color: var(--sklearn-color-unfitted-level-2);
-}
-
-#sk-container-id-18 div.sk-estimator.fitted input.sk-toggleable__control:checked~label.sk-toggleable__label {
-  /* fitted */
-  background-color: var(--sklearn-color-fitted-level-2);
-}
-
-#sk-container-id-18 div.sk-label label.sk-toggleable__label,
-#sk-container-id-18 div.sk-label label {
-  /* The background is the default theme color */
-  color: var(--sklearn-color-text-on-default-background);
-}
-
-/* On hover, darken the color of the background */
-#sk-container-id-18 div.sk-label:hover label.sk-toggleable__label {
-  color: var(--sklearn-color-text);
-  background-color: var(--sklearn-color-unfitted-level-2);
-}
-
-/* Label box, darken color on hover, fitted */
-#sk-container-id-18 div.sk-label.fitted:hover label.sk-toggleable__label.fitted {
-  color: var(--sklearn-color-text);
-  background-color: var(--sklearn-color-fitted-level-2);
-}
-
-/* Estimator label */
-
-#sk-container-id-18 div.sk-label label {
-  font-family: monospace;
-  font-weight: bold;
-  display: inline-block;
-  line-height: 1.2em;
-}
-
-#sk-container-id-18 div.sk-label-container {
-  text-align: center;
-}
-
-/* Estimator-specific */
-#sk-container-id-18 div.sk-estimator {
-  font-family: monospace;
-  border: 1px dotted var(--sklearn-color-border-box);
-  border-radius: 0.25em;
-  box-sizing: border-box;
-  margin-bottom: 0.5em;
-  /* unfitted */
-  background-color: var(--sklearn-color-unfitted-level-0);
-}
-
-#sk-container-id-18 div.sk-estimator.fitted {
-  /* fitted */
-  background-color: var(--sklearn-color-fitted-level-0);
-}
-
-/* on hover */
-#sk-container-id-18 div.sk-estimator:hover {
-  /* unfitted */
-  background-color: var(--sklearn-color-unfitted-level-2);
-}
-
-#sk-container-id-18 div.sk-estimator.fitted:hover {
-  /* fitted */
-  background-color: var(--sklearn-color-fitted-level-2);
-}
-
-/* Specification for estimator info (e.g. "i" and "?") */
-
-/* Common style for "i" and "?" */
-
-.sk-estimator-doc-link,
-a:link.sk-estimator-doc-link,
-a:visited.sk-estimator-doc-link {
-  float: right;
-  font-size: smaller;
-  line-height: 1em;
-  font-family: monospace;
-  background-color: var(--sklearn-color-background);
-  border-radius: 1em;
-  height: 1em;
-  width: 1em;
-  text-decoration: none !important;
-  margin-left: 1ex;
-  /* unfitted */
-  border: var(--sklearn-color-unfitted-level-1) 1pt solid;
-  color: var(--sklearn-color-unfitted-level-1);
-}
-
-.sk-estimator-doc-link.fitted,
-a:link.sk-estimator-doc-link.fitted,
-a:visited.sk-estimator-doc-link.fitted {
-  /* fitted */
-  border: var(--sklearn-color-fitted-level-1) 1pt solid;
-  color: var(--sklearn-color-fitted-level-1);
-}
-
-/* On hover */
-div.sk-estimator:hover .sk-estimator-doc-link:hover,
-.sk-estimator-doc-link:hover,
-div.sk-label-container:hover .sk-estimator-doc-link:hover,
-.sk-estimator-doc-link:hover {
-  /* unfitted */
-  background-color: var(--sklearn-color-unfitted-level-3);
-  color: var(--sklearn-color-background);
-  text-decoration: none;
-}
-
-div.sk-estimator.fitted:hover .sk-estimator-doc-link.fitted:hover,
-.sk-estimator-doc-link.fitted:hover,
-div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
-.sk-estimator-doc-link.fitted:hover {
-  /* fitted */
-  background-color: var(--sklearn-color-fitted-level-3);
-  color: var(--sklearn-color-background);
-  text-decoration: none;
-}
-
-/* Span, style for the box shown on hovering the info icon */
-.sk-estimator-doc-link span {
-  display: none;
-  z-index: 9999;
-  position: relative;
-  font-weight: normal;
-  right: .2ex;
-  padding: .5ex;
-  margin: .5ex;
-  width: min-content;
-  min-width: 20ex;
-  max-width: 50ex;
-  color: var(--sklearn-color-text);
-  box-shadow: 2pt 2pt 4pt #999;
-  /* unfitted */
-  background: var(--sklearn-color-unfitted-level-0);
-  border: .5pt solid var(--sklearn-color-unfitted-level-3);
-}
-
-.sk-estimator-doc-link.fitted span {
-  /* fitted */
-  background: var(--sklearn-color-fitted-level-0);
-  border: var(--sklearn-color-fitted-level-3);
-}
-
-.sk-estimator-doc-link:hover span {
-  display: block;
-}
-
-/* "?"-specific style due to the `<a>` HTML tag */
-
-#sk-container-id-18 a.estimator_doc_link {
-  float: right;
-  font-size: 1rem;
-  line-height: 1em;
-  font-family: monospace;
-  background-color: var(--sklearn-color-background);
-  border-radius: 1rem;
-  height: 1rem;
-  width: 1rem;
-  text-decoration: none;
-  /* unfitted */
-  color: var(--sklearn-color-unfitted-level-1);
-  border: var(--sklearn-color-unfitted-level-1) 1pt solid;
-}
-
-#sk-container-id-18 a.estimator_doc_link.fitted {
-  /* fitted */
-  border: var(--sklearn-color-fitted-level-1) 1pt solid;
-  color: var(--sklearn-color-fitted-level-1);
-}
-
-/* On hover */
-#sk-container-id-18 a.estimator_doc_link:hover {
-  /* unfitted */
-  background-color: var(--sklearn-color-unfitted-level-3);
-  color: var(--sklearn-color-background);
-  text-decoration: none;
-}
-
-#sk-container-id-18 a.estimator_doc_link.fitted:hover {
-  /* fitted */
-  background-color: var(--sklearn-color-fitted-level-3);
-}
-</style><div id="sk-container-id-18" class="sk-top-container"><div class="sk-text-repr-fallback"><pre>RandomForestClassifier(max_features=1.0, max_samples=0.7, n_estimators=500,
-                       random_state=0)</pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br />On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b></div><div class="sk-container" hidden><div class="sk-item"><div class="sk-estimator fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-36" type="checkbox" checked><label for="sk-estimator-id-36" class="sk-toggleable__label fitted sk-toggleable__label-arrow fitted">&nbsp;&nbsp;RandomForestClassifier<a class="sk-estimator-doc-link fitted" rel="noreferrer" target="_blank" href="https://scikit-learn.org/1.4/modules/generated/sklearn.ensemble.RandomForestClassifier.html">?<span>Documentation for RandomForestClassifier</span></a><span class="sk-estimator-doc-link fitted">i<span>Fitted</span></span></label><div class="sk-toggleable__content fitted"><pre>RandomForestClassifier(max_features=1.0, max_samples=0.7, n_estimators=500,
-                       random_state=0)</pre></div> </div></div></div></div>
-
-
-
-
-```python
 # Define a path to the folder where you want to save the model
-path = '/Users/adel/Desktop/'
+path = '/Users/adel/Desktop/Capstone/'
 ```
 
 
@@ -3967,6 +994,16 @@ def read_pickle(path, saved_model_name:str):
 
 
 ```python
+rf1 = read_pickle(path,'hr_rf1')
+```
+
+
+```python
+rf1.best_estimator_
+```
+
+
+```python
 # Write pickle
 #write_pickle(path, rf1, 'hr_rf1')
 ```
@@ -3984,28 +1021,9 @@ rf1.best_score_
 ```
 
 
-
-
-    0.9560746240197273
-
-
-
-
 ```python
 rf1.best_params_
 ```
-
-
-
-
-    {'max_depth': None,
-     'max_features': 1.0,
-     'max_samples': 0.7,
-     'min_samples_leaf': 1,
-     'min_samples_split': 2,
-     'n_estimators': 500}
-
-
 
 
 ```python
@@ -4014,12 +1032,6 @@ rf1_cv_results = make_results('random forest cv', rf1, 'auc')
 print(tree1_cv_results)
 print(rf1_cv_results)
 ```
-
-                  model  precision    recall       F1  accuracy       auc
-    0  decision tree cv   0.971662  0.914947  0.94238   0.98143  0.954807
-                  model  precision    recall        F1  accuracy       auc
-    0  random forest cv   0.984833  0.914949  0.948572  0.983543  0.956075
-
 
 Define a function that gets all the scores from a model's predictions.
 
@@ -4065,51 +1077,6 @@ Now use the best performing model to predict on the test set.
 rf1_test_scores = get_scores('random forest1 test', rf1, X_test, y_test)
 rf1_test_scores
 ```
-
-
-
-
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>model</th>
-      <th>precision</th>
-      <th>recall</th>
-      <th>f1</th>
-      <th>accuracy</th>
-      <th>AUC</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>random forest1 test</td>
-      <td>0.991361</td>
-      <td>0.921687</td>
-      <td>0.955255</td>
-      <td>0.985657</td>
-      <td>0.960043</td>
-    </tr>
-  </tbody>
-</table>
-</div>
-
-
 
 #### Data leakage
 
@@ -4168,159 +1135,6 @@ df2.head()
 ```
 
 
-
-
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>last_evaluation</th>
-      <th>number_project</th>
-      <th>average_montly_hours</th>
-      <th>time_spend_company</th>
-      <th>work_accident</th>
-      <th>left</th>
-      <th>promotion_last_5years</th>
-      <th>salary</th>
-      <th>department_IT</th>
-      <th>department_RandD</th>
-      <th>department_accounting</th>
-      <th>department_hr</th>
-      <th>department_management</th>
-      <th>department_marketing</th>
-      <th>department_product_mng</th>
-      <th>department_sales</th>
-      <th>department_support</th>
-      <th>department_technical</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>0.53</td>
-      <td>2</td>
-      <td>157</td>
-      <td>3</td>
-      <td>0</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>0.86</td>
-      <td>5</td>
-      <td>262</td>
-      <td>6</td>
-      <td>0</td>
-      <td>1</td>
-      <td>0</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>0.88</td>
-      <td>7</td>
-      <td>272</td>
-      <td>4</td>
-      <td>0</td>
-      <td>1</td>
-      <td>0</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>0.87</td>
-      <td>5</td>
-      <td>223</td>
-      <td>5</td>
-      <td>0</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>0.52</td>
-      <td>2</td>
-      <td>159</td>
-      <td>3</td>
-      <td>0</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-    </tr>
-  </tbody>
-</table>
-</div>
-
-
-
-
 ```python
 # Create `overworked` column. For now, it's identical to average monthly hours.
 df2['overworked'] = df2['average_montly_hours']
@@ -4329,10 +1143,6 @@ df2['overworked'] = df2['average_montly_hours']
 print('Max hours:', df2['overworked'].max())
 print('Min hours:', df2['overworked'].min())
 ```
-
-    Max hours: 310
-    Min hours: 96
-
 
 166.67 is approximately the average number of monthly hours for someone who works 50 weeks per year, 5 days per week, 8 hours per day. 
 
@@ -4352,180 +1162,9 @@ df2['overworked'].head()
 ```
 
 
-
-
-    0    0
-    1    1
-    2    1
-    3    1
-    4    0
-    Name: overworked, dtype: int64
-
-
-
-
 ```python
 df2.head()
 ```
-
-
-
-
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>last_evaluation</th>
-      <th>number_project</th>
-      <th>average_montly_hours</th>
-      <th>time_spend_company</th>
-      <th>work_accident</th>
-      <th>left</th>
-      <th>promotion_last_5years</th>
-      <th>salary</th>
-      <th>department_IT</th>
-      <th>department_RandD</th>
-      <th>department_accounting</th>
-      <th>department_hr</th>
-      <th>department_management</th>
-      <th>department_marketing</th>
-      <th>department_product_mng</th>
-      <th>department_sales</th>
-      <th>department_support</th>
-      <th>department_technical</th>
-      <th>overworked</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>0.53</td>
-      <td>2</td>
-      <td>157</td>
-      <td>3</td>
-      <td>0</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>0.86</td>
-      <td>5</td>
-      <td>262</td>
-      <td>6</td>
-      <td>0</td>
-      <td>1</td>
-      <td>0</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>0.88</td>
-      <td>7</td>
-      <td>272</td>
-      <td>4</td>
-      <td>0</td>
-      <td>1</td>
-      <td>0</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>0.87</td>
-      <td>5</td>
-      <td>223</td>
-      <td>5</td>
-      <td>0</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>0.52</td>
-      <td>2</td>
-      <td>159</td>
-      <td>3</td>
-      <td>0</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-    </tr>
-  </tbody>
-</table>
-</div>
-
-
 
 
 ```python
@@ -4535,159 +1174,6 @@ df2 = df2.drop('average_montly_hours', axis=1)
 # Display first few rows of resulting dataframe
 df2.head()
 ```
-
-
-
-
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>last_evaluation</th>
-      <th>number_project</th>
-      <th>time_spend_company</th>
-      <th>work_accident</th>
-      <th>left</th>
-      <th>promotion_last_5years</th>
-      <th>salary</th>
-      <th>department_IT</th>
-      <th>department_RandD</th>
-      <th>department_accounting</th>
-      <th>department_hr</th>
-      <th>department_management</th>
-      <th>department_marketing</th>
-      <th>department_product_mng</th>
-      <th>department_sales</th>
-      <th>department_support</th>
-      <th>department_technical</th>
-      <th>overworked</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>0.53</td>
-      <td>2</td>
-      <td>3</td>
-      <td>0</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>0.86</td>
-      <td>5</td>
-      <td>6</td>
-      <td>0</td>
-      <td>1</td>
-      <td>0</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>0.88</td>
-      <td>7</td>
-      <td>4</td>
-      <td>0</td>
-      <td>1</td>
-      <td>0</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>0.87</td>
-      <td>5</td>
-      <td>5</td>
-      <td>0</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>0.52</td>
-      <td>2</td>
-      <td>3</td>
-      <td>0</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-    </tr>
-  </tbody>
-</table>
-</div>
-
-
 
 
 ```python
@@ -4736,439 +1222,6 @@ tree2 = GridSearchCV(tree, cv_params, scoring=scoring, cv=4, refit='roc_auc_scor
 tree2.fit(X_train, y_train)
 ```
 
-    CPU times: user 2.52 s, sys: 76.8 ms, total: 2.6 s
-    Wall time: 2.63 s
-
-
-
-
-
-<style>#sk-container-id-19 {
-  /* Definition of color scheme common for light and dark mode */
-  --sklearn-color-text: black;
-  --sklearn-color-line: gray;
-  /* Definition of color scheme for unfitted estimators */
-  --sklearn-color-unfitted-level-0: #fff5e6;
-  --sklearn-color-unfitted-level-1: #f6e4d2;
-  --sklearn-color-unfitted-level-2: #ffe0b3;
-  --sklearn-color-unfitted-level-3: chocolate;
-  /* Definition of color scheme for fitted estimators */
-  --sklearn-color-fitted-level-0: #f0f8ff;
-  --sklearn-color-fitted-level-1: #d4ebff;
-  --sklearn-color-fitted-level-2: #b3dbfd;
-  --sklearn-color-fitted-level-3: cornflowerblue;
-
-  /* Specific color for light theme */
-  --sklearn-color-text-on-default-background: var(--sg-text-color, var(--theme-code-foreground, var(--jp-content-font-color1, black)));
-  --sklearn-color-background: var(--sg-background-color, var(--theme-background, var(--jp-layout-color0, white)));
-  --sklearn-color-border-box: var(--sg-text-color, var(--theme-code-foreground, var(--jp-content-font-color1, black)));
-  --sklearn-color-icon: #696969;
-
-  @media (prefers-color-scheme: dark) {
-    /* Redefinition of color scheme for dark theme */
-    --sklearn-color-text-on-default-background: var(--sg-text-color, var(--theme-code-foreground, var(--jp-content-font-color1, white)));
-    --sklearn-color-background: var(--sg-background-color, var(--theme-background, var(--jp-layout-color0, #111)));
-    --sklearn-color-border-box: var(--sg-text-color, var(--theme-code-foreground, var(--jp-content-font-color1, white)));
-    --sklearn-color-icon: #878787;
-  }
-}
-
-#sk-container-id-19 {
-  color: var(--sklearn-color-text);
-}
-
-#sk-container-id-19 pre {
-  padding: 0;
-}
-
-#sk-container-id-19 input.sk-hidden--visually {
-  border: 0;
-  clip: rect(1px 1px 1px 1px);
-  clip: rect(1px, 1px, 1px, 1px);
-  height: 1px;
-  margin: -1px;
-  overflow: hidden;
-  padding: 0;
-  position: absolute;
-  width: 1px;
-}
-
-#sk-container-id-19 div.sk-dashed-wrapped {
-  border: 1px dashed var(--sklearn-color-line);
-  margin: 0 0.4em 0.5em 0.4em;
-  box-sizing: border-box;
-  padding-bottom: 0.4em;
-  background-color: var(--sklearn-color-background);
-}
-
-#sk-container-id-19 div.sk-container {
-  /* jupyter's `normalize.less` sets `[hidden] { display: none; }`
-     but bootstrap.min.css set `[hidden] { display: none !important; }`
-     so we also need the `!important` here to be able to override the
-     default hidden behavior on the sphinx rendered scikit-learn.org.
-     See: https://github.com/scikit-learn/scikit-learn/issues/21755 */
-  display: inline-block !important;
-  position: relative;
-}
-
-#sk-container-id-19 div.sk-text-repr-fallback {
-  display: none;
-}
-
-div.sk-parallel-item,
-div.sk-serial,
-div.sk-item {
-  /* draw centered vertical line to link estimators */
-  background-image: linear-gradient(var(--sklearn-color-text-on-default-background), var(--sklearn-color-text-on-default-background));
-  background-size: 2px 100%;
-  background-repeat: no-repeat;
-  background-position: center center;
-}
-
-/* Parallel-specific style estimator block */
-
-#sk-container-id-19 div.sk-parallel-item::after {
-  content: "";
-  width: 100%;
-  border-bottom: 2px solid var(--sklearn-color-text-on-default-background);
-  flex-grow: 1;
-}
-
-#sk-container-id-19 div.sk-parallel {
-  display: flex;
-  align-items: stretch;
-  justify-content: center;
-  background-color: var(--sklearn-color-background);
-  position: relative;
-}
-
-#sk-container-id-19 div.sk-parallel-item {
-  display: flex;
-  flex-direction: column;
-}
-
-#sk-container-id-19 div.sk-parallel-item:first-child::after {
-  align-self: flex-end;
-  width: 50%;
-}
-
-#sk-container-id-19 div.sk-parallel-item:last-child::after {
-  align-self: flex-start;
-  width: 50%;
-}
-
-#sk-container-id-19 div.sk-parallel-item:only-child::after {
-  width: 0;
-}
-
-/* Serial-specific style estimator block */
-
-#sk-container-id-19 div.sk-serial {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background-color: var(--sklearn-color-background);
-  padding-right: 1em;
-  padding-left: 1em;
-}
-
-
-/* Toggleable style: style used for estimator/Pipeline/ColumnTransformer box that is
-clickable and can be expanded/collapsed.
-- Pipeline and ColumnTransformer use this feature and define the default style
-- Estimators will overwrite some part of the style using the `sk-estimator` class
-*/
-
-/* Pipeline and ColumnTransformer style (default) */
-
-#sk-container-id-19 div.sk-toggleable {
-  /* Default theme specific background. It is overwritten whether we have a
-  specific estimator or a Pipeline/ColumnTransformer */
-  background-color: var(--sklearn-color-background);
-}
-
-/* Toggleable label */
-#sk-container-id-19 label.sk-toggleable__label {
-  cursor: pointer;
-  display: block;
-  width: 100%;
-  margin-bottom: 0;
-  padding: 0.5em;
-  box-sizing: border-box;
-  text-align: center;
-}
-
-#sk-container-id-19 label.sk-toggleable__label-arrow:before {
-  /* Arrow on the left of the label */
-  content: "▸";
-  float: left;
-  margin-right: 0.25em;
-  color: var(--sklearn-color-icon);
-}
-
-#sk-container-id-19 label.sk-toggleable__label-arrow:hover:before {
-  color: var(--sklearn-color-text);
-}
-
-/* Toggleable content - dropdown */
-
-#sk-container-id-19 div.sk-toggleable__content {
-  max-height: 0;
-  max-width: 0;
-  overflow: hidden;
-  text-align: left;
-  /* unfitted */
-  background-color: var(--sklearn-color-unfitted-level-0);
-}
-
-#sk-container-id-19 div.sk-toggleable__content.fitted {
-  /* fitted */
-  background-color: var(--sklearn-color-fitted-level-0);
-}
-
-#sk-container-id-19 div.sk-toggleable__content pre {
-  margin: 0.2em;
-  border-radius: 0.25em;
-  color: var(--sklearn-color-text);
-  /* unfitted */
-  background-color: var(--sklearn-color-unfitted-level-0);
-}
-
-#sk-container-id-19 div.sk-toggleable__content.fitted pre {
-  /* unfitted */
-  background-color: var(--sklearn-color-fitted-level-0);
-}
-
-#sk-container-id-19 input.sk-toggleable__control:checked~div.sk-toggleable__content {
-  /* Expand drop-down */
-  max-height: 200px;
-  max-width: 100%;
-  overflow: auto;
-}
-
-#sk-container-id-19 input.sk-toggleable__control:checked~label.sk-toggleable__label-arrow:before {
-  content: "▾";
-}
-
-/* Pipeline/ColumnTransformer-specific style */
-
-#sk-container-id-19 div.sk-label input.sk-toggleable__control:checked~label.sk-toggleable__label {
-  color: var(--sklearn-color-text);
-  background-color: var(--sklearn-color-unfitted-level-2);
-}
-
-#sk-container-id-19 div.sk-label.fitted input.sk-toggleable__control:checked~label.sk-toggleable__label {
-  background-color: var(--sklearn-color-fitted-level-2);
-}
-
-/* Estimator-specific style */
-
-/* Colorize estimator box */
-#sk-container-id-19 div.sk-estimator input.sk-toggleable__control:checked~label.sk-toggleable__label {
-  /* unfitted */
-  background-color: var(--sklearn-color-unfitted-level-2);
-}
-
-#sk-container-id-19 div.sk-estimator.fitted input.sk-toggleable__control:checked~label.sk-toggleable__label {
-  /* fitted */
-  background-color: var(--sklearn-color-fitted-level-2);
-}
-
-#sk-container-id-19 div.sk-label label.sk-toggleable__label,
-#sk-container-id-19 div.sk-label label {
-  /* The background is the default theme color */
-  color: var(--sklearn-color-text-on-default-background);
-}
-
-/* On hover, darken the color of the background */
-#sk-container-id-19 div.sk-label:hover label.sk-toggleable__label {
-  color: var(--sklearn-color-text);
-  background-color: var(--sklearn-color-unfitted-level-2);
-}
-
-/* Label box, darken color on hover, fitted */
-#sk-container-id-19 div.sk-label.fitted:hover label.sk-toggleable__label.fitted {
-  color: var(--sklearn-color-text);
-  background-color: var(--sklearn-color-fitted-level-2);
-}
-
-/* Estimator label */
-
-#sk-container-id-19 div.sk-label label {
-  font-family: monospace;
-  font-weight: bold;
-  display: inline-block;
-  line-height: 1.2em;
-}
-
-#sk-container-id-19 div.sk-label-container {
-  text-align: center;
-}
-
-/* Estimator-specific */
-#sk-container-id-19 div.sk-estimator {
-  font-family: monospace;
-  border: 1px dotted var(--sklearn-color-border-box);
-  border-radius: 0.25em;
-  box-sizing: border-box;
-  margin-bottom: 0.5em;
-  /* unfitted */
-  background-color: var(--sklearn-color-unfitted-level-0);
-}
-
-#sk-container-id-19 div.sk-estimator.fitted {
-  /* fitted */
-  background-color: var(--sklearn-color-fitted-level-0);
-}
-
-/* on hover */
-#sk-container-id-19 div.sk-estimator:hover {
-  /* unfitted */
-  background-color: var(--sklearn-color-unfitted-level-2);
-}
-
-#sk-container-id-19 div.sk-estimator.fitted:hover {
-  /* fitted */
-  background-color: var(--sklearn-color-fitted-level-2);
-}
-
-/* Specification for estimator info (e.g. "i" and "?") */
-
-/* Common style for "i" and "?" */
-
-.sk-estimator-doc-link,
-a:link.sk-estimator-doc-link,
-a:visited.sk-estimator-doc-link {
-  float: right;
-  font-size: smaller;
-  line-height: 1em;
-  font-family: monospace;
-  background-color: var(--sklearn-color-background);
-  border-radius: 1em;
-  height: 1em;
-  width: 1em;
-  text-decoration: none !important;
-  margin-left: 1ex;
-  /* unfitted */
-  border: var(--sklearn-color-unfitted-level-1) 1pt solid;
-  color: var(--sklearn-color-unfitted-level-1);
-}
-
-.sk-estimator-doc-link.fitted,
-a:link.sk-estimator-doc-link.fitted,
-a:visited.sk-estimator-doc-link.fitted {
-  /* fitted */
-  border: var(--sklearn-color-fitted-level-1) 1pt solid;
-  color: var(--sklearn-color-fitted-level-1);
-}
-
-/* On hover */
-div.sk-estimator:hover .sk-estimator-doc-link:hover,
-.sk-estimator-doc-link:hover,
-div.sk-label-container:hover .sk-estimator-doc-link:hover,
-.sk-estimator-doc-link:hover {
-  /* unfitted */
-  background-color: var(--sklearn-color-unfitted-level-3);
-  color: var(--sklearn-color-background);
-  text-decoration: none;
-}
-
-div.sk-estimator.fitted:hover .sk-estimator-doc-link.fitted:hover,
-.sk-estimator-doc-link.fitted:hover,
-div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
-.sk-estimator-doc-link.fitted:hover {
-  /* fitted */
-  background-color: var(--sklearn-color-fitted-level-3);
-  color: var(--sklearn-color-background);
-  text-decoration: none;
-}
-
-/* Span, style for the box shown on hovering the info icon */
-.sk-estimator-doc-link span {
-  display: none;
-  z-index: 9999;
-  position: relative;
-  font-weight: normal;
-  right: .2ex;
-  padding: .5ex;
-  margin: .5ex;
-  width: min-content;
-  min-width: 20ex;
-  max-width: 50ex;
-  color: var(--sklearn-color-text);
-  box-shadow: 2pt 2pt 4pt #999;
-  /* unfitted */
-  background: var(--sklearn-color-unfitted-level-0);
-  border: .5pt solid var(--sklearn-color-unfitted-level-3);
-}
-
-.sk-estimator-doc-link.fitted span {
-  /* fitted */
-  background: var(--sklearn-color-fitted-level-0);
-  border: var(--sklearn-color-fitted-level-3);
-}
-
-.sk-estimator-doc-link:hover span {
-  display: block;
-}
-
-/* "?"-specific style due to the `<a>` HTML tag */
-
-#sk-container-id-19 a.estimator_doc_link {
-  float: right;
-  font-size: 1rem;
-  line-height: 1em;
-  font-family: monospace;
-  background-color: var(--sklearn-color-background);
-  border-radius: 1rem;
-  height: 1rem;
-  width: 1rem;
-  text-decoration: none;
-  /* unfitted */
-  color: var(--sklearn-color-unfitted-level-1);
-  border: var(--sklearn-color-unfitted-level-1) 1pt solid;
-}
-
-#sk-container-id-19 a.estimator_doc_link.fitted {
-  /* fitted */
-  border: var(--sklearn-color-fitted-level-1) 1pt solid;
-  color: var(--sklearn-color-fitted-level-1);
-}
-
-/* On hover */
-#sk-container-id-19 a.estimator_doc_link:hover {
-  /* unfitted */
-  background-color: var(--sklearn-color-unfitted-level-3);
-  color: var(--sklearn-color-background);
-  text-decoration: none;
-}
-
-#sk-container-id-19 a.estimator_doc_link.fitted:hover {
-  /* fitted */
-  background-color: var(--sklearn-color-fitted-level-3);
-}
-</style><div id="sk-container-id-19" class="sk-top-container"><div class="sk-text-repr-fallback"><pre>GridSearchCV(cv=4, estimator=DecisionTreeClassifier(random_state=0),
-             param_grid={&#x27;max_depth&#x27;: [4, 6, 8, None],
-                         &#x27;min_samples_leaf&#x27;: [2, 5, 1],
-                         &#x27;min_samples_split&#x27;: [2, 4, 6]},
-             refit=&#x27;roc_auc_score&#x27;,
-             scoring={&#x27;accuracy&#x27;: &#x27;accuracy&#x27;,
-                      &#x27;f1&#x27;: make_scorer(f1_score, response_method=&#x27;predict&#x27;),
-                      &#x27;precision&#x27;: make_scorer(precision_score, response_method=&#x27;predict&#x27;),
-                      &#x27;recall&#x27;: make_scorer(recall_score, response_method=&#x27;predict&#x27;),
-                      &#x27;roc_auc_score&#x27;: make_scorer(roc_auc_score, response_method=&#x27;predict&#x27;)})</pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br />On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b></div><div class="sk-container" hidden><div class="sk-item sk-dashed-wrapped"><div class="sk-label-container"><div class="sk-label fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-37" type="checkbox" ><label for="sk-estimator-id-37" class="sk-toggleable__label fitted sk-toggleable__label-arrow fitted">&nbsp;&nbsp;GridSearchCV<a class="sk-estimator-doc-link fitted" rel="noreferrer" target="_blank" href="https://scikit-learn.org/1.4/modules/generated/sklearn.model_selection.GridSearchCV.html">?<span>Documentation for GridSearchCV</span></a><span class="sk-estimator-doc-link fitted">i<span>Fitted</span></span></label><div class="sk-toggleable__content fitted"><pre>GridSearchCV(cv=4, estimator=DecisionTreeClassifier(random_state=0),
-             param_grid={&#x27;max_depth&#x27;: [4, 6, 8, None],
-                         &#x27;min_samples_leaf&#x27;: [2, 5, 1],
-                         &#x27;min_samples_split&#x27;: [2, 4, 6]},
-             refit=&#x27;roc_auc_score&#x27;,
-             scoring={&#x27;accuracy&#x27;: &#x27;accuracy&#x27;,
-                      &#x27;f1&#x27;: make_scorer(f1_score, response_method=&#x27;predict&#x27;),
-                      &#x27;precision&#x27;: make_scorer(precision_score, response_method=&#x27;predict&#x27;),
-                      &#x27;recall&#x27;: make_scorer(recall_score, response_method=&#x27;predict&#x27;),
-                      &#x27;roc_auc_score&#x27;: make_scorer(roc_auc_score, response_method=&#x27;predict&#x27;)})</pre></div> </div></div><div class="sk-parallel"><div class="sk-parallel-item"><div class="sk-item"><div class="sk-label-container"><div class="sk-label fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-38" type="checkbox" ><label for="sk-estimator-id-38" class="sk-toggleable__label fitted sk-toggleable__label-arrow fitted">estimator: DecisionTreeClassifier</label><div class="sk-toggleable__content fitted"><pre>DecisionTreeClassifier(random_state=0)</pre></div> </div></div><div class="sk-serial"><div class="sk-item"><div class="sk-estimator fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-39" type="checkbox" ><label for="sk-estimator-id-39" class="sk-toggleable__label fitted sk-toggleable__label-arrow fitted">&nbsp;DecisionTreeClassifier<a class="sk-estimator-doc-link fitted" rel="noreferrer" target="_blank" href="https://scikit-learn.org/1.4/modules/generated/sklearn.tree.DecisionTreeClassifier.html">?<span>Documentation for DecisionTreeClassifier</span></a></label><div class="sk-toggleable__content fitted"><pre>DecisionTreeClassifier(random_state=0)</pre></div> </div></div></div></div></div></div></div></div></div>
-
-
-
 
 ```python
 # Get all CV scores
@@ -5176,12 +1229,6 @@ tree2_cv_results = make_results('decision tree2 cv', tree2, 'auc')
 print(tree1_cv_results)
 print(tree2_cv_results)
 ```
-
-                  model  precision    recall       F1  accuracy       auc
-    0  decision tree cv   0.971662  0.914947  0.94238   0.98143  0.954807
-                   model  precision    recall        F1  accuracy      auc
-    0  decision tree2 cv   0.856693  0.903553  0.878882  0.958523  0.93651
-
 
 #### Random forest - Round 2
 
@@ -5236,63 +1283,12 @@ print(tree2_cv_results)
 print(rf2_cv_results)
 ```
 
-                   model  precision    recall        F1  accuracy      auc
-    0  decision tree2 cv   0.856693  0.903553  0.878882  0.958523  0.93651
-                   model  precision    recall        F1  accuracy       auc
-    0  random forest2 cv   0.910057  0.887475  0.898603  0.966752  0.935004
-
-
 
 ```python
 # Get predictions on test data
 rf2_test_scores = get_scores('random forest2 test', rf2, X_test, y_test)
 rf2_test_scores
 ```
-
-
-
-
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>model</th>
-      <th>precision</th>
-      <th>recall</th>
-      <th>f1</th>
-      <th>accuracy</th>
-      <th>AUC</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>random forest2 test</td>
-      <td>0.900407</td>
-      <td>0.889558</td>
-      <td>0.894949</td>
-      <td>0.96531</td>
-      <td>0.934979</td>
-    </tr>
-  </tbody>
-</table>
-</div>
-
-
 
 **Reults:**
 
@@ -5313,94 +1309,24 @@ tree2_importance
 ```
 
 
-
-
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>gini_importance</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>last_evaluation</th>
-      <td>0.343958</td>
-    </tr>
-    <tr>
-      <th>number_project</th>
-      <td>0.343385</td>
-    </tr>
-    <tr>
-      <th>time_spend_company</th>
-      <td>0.215681</td>
-    </tr>
-    <tr>
-      <th>overworked</th>
-      <td>0.093498</td>
-    </tr>
-    <tr>
-      <th>department_support</th>
-      <td>0.001142</td>
-    </tr>
-    <tr>
-      <th>salary</th>
-      <td>0.000910</td>
-    </tr>
-    <tr>
-      <th>department_sales</th>
-      <td>0.000607</td>
-    </tr>
-    <tr>
-      <th>department_technical</th>
-      <td>0.000418</td>
-    </tr>
-    <tr>
-      <th>work_accident</th>
-      <td>0.000183</td>
-    </tr>
-    <tr>
-      <th>department_IT</th>
-      <td>0.000139</td>
-    </tr>
-    <tr>
-      <th>department_marketing</th>
-      <td>0.000078</td>
-    </tr>
-  </tbody>
-</table>
-</div>
-
-
-
-
 ```python
-sns.barplot(data=tree2_importance, x="gini_importance", y=tree2_importance.index)
-plt.title("Decision Tree: Feature Importances for Employee Leaving", fontsize=12)
-plt.ylabel("Feature")
-plt.xlabel("Importance")
+# Create a new figure and axis
+fig, ax = plt.subplots(figsize=(8, 6))
+
+
+# Create the bar plot
+sns.barplot(data=tree2_importance, x="gini_importance", y=tree2_importance.index, ax=ax)
+ax.set_title("Decision Tree: Feature Importances for Employee Leaving", fontsize=12)
+ax.set_ylabel("Feature")
+ax.set_xlabel("Importance")
+
+# Save the plot after it has been displayed
+plt.tight_layout()
+plt.savefig("Feature_Importance_by_Decision_Tree.pdf")
+
+# Display the plot
 plt.show()
 ```
-
-
-    
-![png](output_153_0.png)
-    
-
 
 ### Random Forest round 2
 
@@ -5412,120 +1338,30 @@ rf_importance
 ```
 
 
-
-
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>gini_importance</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>last_evaluation</th>
-      <td>0.346426</td>
-    </tr>
-    <tr>
-      <th>number_project</th>
-      <td>0.315219</td>
-    </tr>
-    <tr>
-      <th>time_spend_company</th>
-      <td>0.211460</td>
-    </tr>
-    <tr>
-      <th>overworked</th>
-      <td>0.084867</td>
-    </tr>
-    <tr>
-      <th>salary</th>
-      <td>0.014071</td>
-    </tr>
-    <tr>
-      <th>work_accident</th>
-      <td>0.005495</td>
-    </tr>
-    <tr>
-      <th>department_technical</th>
-      <td>0.004937</td>
-    </tr>
-    <tr>
-      <th>department_sales</th>
-      <td>0.004860</td>
-    </tr>
-    <tr>
-      <th>department_support</th>
-      <td>0.003798</td>
-    </tr>
-    <tr>
-      <th>department_IT</th>
-      <td>0.001761</td>
-    </tr>
-    <tr>
-      <th>department_RandD</th>
-      <td>0.001540</td>
-    </tr>
-    <tr>
-      <th>department_accounting</th>
-      <td>0.001533</td>
-    </tr>
-    <tr>
-      <th>department_hr</th>
-      <td>0.001160</td>
-    </tr>
-    <tr>
-      <th>department_product_mng</th>
-      <td>0.001073</td>
-    </tr>
-    <tr>
-      <th>promotion_last_5years</th>
-      <td>0.000792</td>
-    </tr>
-    <tr>
-      <th>department_marketing</th>
-      <td>0.000528</td>
-    </tr>
-    <tr>
-      <th>department_management</th>
-      <td>0.000480</td>
-    </tr>
-  </tbody>
-</table>
-</div>
-
-
-
-
 ```python
-sns.barplot(data=rf_importance, x='gini_importance', y=rf_importance.index)
-plt.title("Random Fores: Feature Importances for Employee Leaving", fontsize=12)
-plt.ylabel("Feature")
-plt.xlabel("Importance")
+# Create a new figure and axis
+fig, ax = plt.subplots(figsize=(8, 6))
+
+# Create the bar plot
+sns.barplot(data=rf_importance, x='gini_importance', y=rf_importance.index, ax=ax)
+ax.set_title("Random Forest: Feature Importances for Employee Leaving", fontsize=12)
+ax.set_ylabel("Feature")
+ax.set_xlabel("Importance")
+
+# Save the plot after it has been displayed
+plt.tight_layout()
+plt.savefig("Feature_Importances_by_RandomForest.pdf")
+
+# Display the plot
 plt.show()
 ```
 
-
-    
-![png](output_156_0.png)
-    
-
-
 The barplot above shows that in this decision tree model, `last_evaluation`, `number_project`, `time spend company`, and `overworked` have the highest importance, in that order. These variables are most helpful in predicting the outcome variable, `left`.
+
+
+```python
+
+```
 
 
 ```python
